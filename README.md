@@ -1,6 +1,9 @@
 # Microwave
  Design and Implementation of Microwave Program  (Embedded)
 
+([Design Documentation](docs/induistral_project.pdf))
+
+([Dynamic Design Documentation](docs/induistral_project_D_D.pdf))
 
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine.
