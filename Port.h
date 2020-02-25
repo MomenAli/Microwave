@@ -12,37 +12,25 @@
 #ifndef PORT_H
 #define	PORT_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include "Main.h"
 
-// TODO Insert appropriate #include <>
+//Lamp output pin 
+#define  LAMP_PORT GPIO_PORTB_DATA
+#define  LAMP_DIR  GPIO_PORTB_DIR
+#define  LAMP_PIN  PIN_0
 
-// TODO Insert C++ class definitions if appropriate
 
-// TODO Insert declarations
+//Heater output pin 
+#define  HEATER_PORT GPIO_PORTB_DATA
+#define  HEATER_DIR  GPIO_PORTB_DIR
+#define  HEATER_PIN  PIN_1
 
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
 
-    <p><b>Description:</b></p>
+//Motor output pin 
+#define  MOTOR_PORT GPIO_PORTC_DATA
+#define  MOTOR_DIR  GPIO_PORTC_DIR
+#define  MOTOR_PIN  PIN_2
 
-    <p><b>Precondition:</b></p>
-
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
- */
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
 
 
 #endif	/* PORT_H */

@@ -12,37 +12,25 @@
 #ifndef GPIO_H
 #define	GPIO_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include "Main.h"
 
-// TODO Insert appropriate #include <>
 
-// TODO Insert C++ class definitions if appropriate
+/* GPIO port operations */
+#define GPIO_Set_Dir_Port(DIRECTION_REG , DIRECTION)    ((DIRECTION_REG)=(DIRECTION)?(~0):(0))
+#define GPIO_Write_Port(DATA_REG , DATA)                ((DATA_REG)=(DATA))
+#define GPIO_Read_Port(DATA_REG)                        (DATA_REG)
 
-// TODO Insert declarations
 
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
+/* GPIO pin operations */
+#define GPIO_Set_Dir_Pin(DIRECTION_REG ,PIN, DIRECTION)     ((DIRECTION_REG)=(DIRECTION_REG & ~(1<<PIN))|(DIRECTION<<PIN))
+#define GPIO_Write_Pin(DATA_REG ,PIN, DATA)                 ((DATA_REG)=(DATA_REG & ~(1<<PIN))|(DATA<<PIN))
+#define GPIO_Toggle_Pin(DATA_REG ,PIN)                      ((DATA_REG)=(DATA_REG ^(1<<PIN)))
+#define GPIO_Read_Pin(DATA_REG ,PIN)                        ((DATA_REG >> PIN)& 1)
 
-    <p><b>Description:</b></p>
 
-    <p><b>Precondition:</b></p>
 
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
- */
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
+uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress/*direction register address*/,uint8 dir/* DIRECTION*/);
+uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress/*direction register address*/,uint8 pin_number,uint8 dir/* I/O*/);
 
 
 #endif	/* GPIO */
