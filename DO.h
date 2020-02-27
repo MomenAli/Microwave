@@ -10,40 +10,37 @@
 // more than once.  
 #ifndef DO_H
 #define	DO_H
+#include "Main.h"
 
-#include <xc.h> // include processor files - each processor file is guarded.  
 
-// TODO Insert appropriate #include <>
-
-// TODO Insert C++ class definitions if appropriate
-
-// TODO Insert declarations
-
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
-
-    <p><b>Description:</b></p>
-
-    <p><b>Precondition:</b></p>
-
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
+/* this is the structure of every DO will this driver will control
+ * port for data register
+ * dir for direction register
+ * pin for the pin number of the output
  */
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
+typedef struct {
+    volatile uint8 * portRegPtr;
+    volatile uint8 * dirRegPtr; 
+    uint8 pin;
+}DOStruct_t;
 
+typedef enum{
+    /*modify this enum depend on your connection (cathode or anode)*/
+    DO_OFF = 0,
+    DO_ON  = 1
+}LEDState_t;
 
+typedef enum
+{
+    DO_LAMP,
+    DO_HEATER,
+    DO_MOTOR
+}DO_t;
+
+uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state);
+uint8 DO_GetState(DO_t DO);
+void DO_SetState(DO_t DO,LEDState_t state);
+void DO_update(void);
 
 #endif	/* DO_H */
 

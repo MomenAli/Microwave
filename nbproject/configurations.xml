@@ -23,7 +23,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>main.c</itemPath>
       <itemPath>GPIO.c</itemPath>
       <itemPath>SW.c</itemPath>
       <itemPath>DO.c</itemPath>
