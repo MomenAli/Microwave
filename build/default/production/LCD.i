@@ -5628,3 +5628,142 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 9 "LCD.c" 2
 
+
+# 1 "./GPIO.h" 1
+# 15 "./GPIO.h"
+# 1 "./Main.h" 1
+# 68 "./Main.h"
+typedef unsigned char uint8;
+typedef unsigned int uint16;
+# 15 "./GPIO.h" 2
+# 37 "./GPIO.h"
+uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
+uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
+# 11 "LCD.c" 2
+
+# 1 "./Port.h" 1
+# 12 "LCD.c" 2
+
+# 1 "./LCD.h" 1
+# 16 "./LCD.h"
+typedef enum
+{
+    LCD_Clear = 0b00000001,
+    LCD_Home = 0b00000010,
+    LCD_EntryMode = 0b00000110,
+    LCD_DisplayOff = 0b00001000,
+    LCD_DisplayOn = 0b00001100,
+    LCD_FunctionReset = 0b00110000,
+    LCD_FunctionSet8bit = 0b00111000,
+    LCD_SetCursor = 0b10000000,
+}LCD_Instruction_t;
+
+
+void LCD_Init(void);
+void LCD_Write_Char(uint8 ch);
+void LCD_Write_String(uint8 * str);
+void LCD_Write_Instruction(LCD_Instruction_t inst);
+void LCD_Write_Byte(uint8 byte);
+# 13 "LCD.c" 2
+# 25 "LCD.c"
+void LCD_Init(void)
+{
+
+
+
+
+    GPIO_Init_Pin(&(TRISE),(1),(0));
+
+    GPIO_Init_Pin(&(TRISE),(2),(0));
+
+
+
+
+    GPIO_Init_Port(&(TRISD),(0));
+# 48 "LCD.c"
+    _delay((unsigned long)((35)*(8000000/4000.0)));
+
+    LCD_Write_Instruction(LCD_FunctionReset);
+    _delay((unsigned long)((10)*(8000000/4000.0)));
+
+    LCD_Write_Instruction(LCD_FunctionReset);
+    _delay((unsigned long)((150)*(8000000/4000000.0)));
+
+    LCD_Write_Instruction(LCD_FunctionReset);
+
+
+    LCD_Write_Instruction(LCD_FunctionSet8bit);
+    _delay((unsigned long)((50)*(8000000/4000000.0)));
+
+
+    LCD_Write_Instruction(LCD_DisplayOff);
+    _delay((unsigned long)((50)*(8000000/4000000.0)));
+
+
+    LCD_Write_Instruction(LCD_Clear);
+    _delay((unsigned long)((2)*(8000000/4000.0)));
+
+
+    LCD_Write_Instruction(LCD_EntryMode);
+    _delay((unsigned long)((50)*(8000000/4000.0)));
+
+
+
+
+    LCD_Write_Instruction(LCD_DisplayOn);
+    _delay((unsigned long)((50)*(8000000/4000.0)));
+
+}
+# 89 "LCD.c"
+void LCD_Write_Char(uint8 ch)
+{
+
+    (((PORTE))=((PORTE) & ~(1<<(2)))|(1<<(2)));
+
+    (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
+
+    LCD_Write_Byte(ch);
+}
+
+
+
+
+
+
+
+void LCD_Write_String(uint8 str[])
+{
+
+
+
+}
+# 119 "LCD.c"
+void LCD_Write_Instruction(LCD_Instruction_t inst)
+{
+
+    (((PORTE))=((PORTE) & ~(1<<(2)))|(0<<(2)));
+
+    (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
+
+    LCD_Write_Byte(inst);
+}
+# 136 "LCD.c"
+void LCD_Write_Byte(uint8 byte)
+{
+
+
+
+
+    (((PORTD))=(byte));
+
+
+    (((PORTE))=((PORTE) & ~(1<<(1)))|(1<<(1)));
+
+    _delay((unsigned long)((100)*(8000000/4000000.0)));
+
+    (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
+
+    _delay((unsigned long)((1)*(8000000/4000000.0)));
+
+}

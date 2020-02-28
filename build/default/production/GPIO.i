@@ -5634,9 +5634,10 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 15 "./GPIO.h" 2
-# 32 "./GPIO.h"
+# 37 "./GPIO.h"
 uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
 uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
 # 8 "GPIO.c" 2
 
 
@@ -5676,4 +5677,24 @@ uint8 GPIO_Init_Pin(volatile uint8 *DirRegAddress ,uint8 pin_number,uint8 dir )
         ((*DirRegAddress)=(*DirRegAddress & ~(1<<pin_number))|(dir<<pin_number));
     }
     return ret;
+}
+
+
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir )
+{
+    uint8 ret = 1;
+
+    if(*DirRegAddress != (TRISA) && *DirRegAddress != (TRISB) &&
+       *DirRegAddress != (TRISC) &&*DirRegAddress != (TRISD) &&
+       *DirRegAddress != (TRISE))
+    {
+
+       ret = 0;
+    }
+    else
+    {
+        ((*DirRegAddress)= ((*DirRegAddress)& ~(0xF<<(nibble_num*4)))); ((*DirRegAddress)=((*DirRegAddress)|(((dir)?(~0):(0))&(0xF<<(nibble_num*4)))));;
+    }
+    return ret;
+
 }

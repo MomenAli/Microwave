@@ -629,3 +629,57 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;GPIO.c: 46: }
 [e :UE 370 ]
 }
+"49
+[; ;GPIO.c: 49: uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir )
+[v _GPIO_Init_Nibble `(uc ~T0 @X0 1 ef3`*Vuc`uc`uc ]
+"50
+[; ;GPIO.c: 50: {
+{
+[e :U _GPIO_Init_Nibble ]
+"49
+[; ;GPIO.c: 49: uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir )
+[v _DirRegAddress `*Vuc ~T0 @X0 1 r1 ]
+[v _nibble_num `uc ~T0 @X0 1 r2 ]
+[v _dir `uc ~T0 @X0 1 r3 ]
+"50
+[; ;GPIO.c: 50: {
+[f ]
+"51
+[; ;GPIO.c: 51:     uint8 ret = 1;
+[v _ret `uc ~T0 @X0 1 a ]
+[e = _ret -> -> 1 `i `uc ]
+"53
+[; ;GPIO.c: 53:     if(*DirRegAddress != (TRISA) && *DirRegAddress != (TRISB) &&
+[e $ ! && && && && != -> *U _DirRegAddress `i -> _TRISA `i != -> *U _DirRegAddress `i -> _TRISB `i != -> *U _DirRegAddress `i -> _TRISC `i != -> *U _DirRegAddress `i -> _TRISD `i != -> *U _DirRegAddress `i -> _TRISE `i 374  ]
+"56
+[; ;GPIO.c: 56:     {
+{
+"58
+[; ;GPIO.c: 58:        ret = 0;
+[e = _ret -> -> 0 `i `uc ]
+"59
+[; ;GPIO.c: 59:     }
+}
+[e $U 375  ]
+"60
+[; ;GPIO.c: 60:     else
+[e :U 374 ]
+"61
+[; ;GPIO.c: 61:     {
+{
+"62
+[; ;GPIO.c: 62:         ((*DirRegAddress)= ((*DirRegAddress)& ~(0xF<<(nibble_num*4)))); ((*DirRegAddress)=((*DirRegAddress)|(((dir)?(~0):(0))&(0xF<<(nibble_num*4)))));;
+[e = *U _DirRegAddress -> & -> *U _DirRegAddress `i ~ << -> 15 `i * -> _nibble_num `i -> 4 `i `uc ]
+[e = *U _DirRegAddress -> | -> *U _DirRegAddress `i & ? != -> _dir `i -> 0 `i : ~ -> 0 `i -> 0 `i << -> 15 `i * -> _nibble_num `i -> 4 `i `uc ]
+"63
+[; ;GPIO.c: 63:     }
+}
+[e :U 375 ]
+"64
+[; ;GPIO.c: 64:     return ret;
+[e ) _ret ]
+[e $UE 373  ]
+"66
+[; ;GPIO.c: 66: }
+[e :UE 373 ]
+}

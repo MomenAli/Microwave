@@ -44,3 +44,23 @@ uint8 GPIO_Init_Pin(volatile uint8 *DirRegAddress/*direction register address*/,
     }
     return ret;
 }
+
+
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress/*direction register address*/,uint8 nibble_num,uint8 dir/* I/O*/)
+{
+    uint8 ret = 1;
+    /*check if the address valid*/
+    if(*DirRegAddress != GPIO_PORTA_DIR && *DirRegAddress != GPIO_PORTB_DIR &&
+       *DirRegAddress != GPIO_PORTC_DIR &&*DirRegAddress != GPIO_PORTD_DIR &&
+       *DirRegAddress != GPIO_PORTE_DIR)
+    {
+       /*invalid input return 0 */
+       ret = 0;
+    }
+    else
+    {      
+        GPIO_Set_Dir_Nibble(*DirRegAddress,nibble_num,dir);
+    }
+    return ret;
+    
+}

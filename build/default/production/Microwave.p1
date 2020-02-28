@@ -1,7 +1,13 @@
 Version 4.0 HI-TECH Software Intermediate Code
 [p mainexit ]
-"17 Microwave.c
-[; ;Microwave.c: 17:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
+"29 ./LCD.h
+[; ;./LCD.h: 29: void LCD_Init(void);
+[v _LCD_Init `(v ~T0 @X0 0 ef ]
+"30
+[; ;./LCD.h: 30: void LCD_Write_Char(uint8 ch);
+[v _LCD_Write_Char `(v ~T0 @X0 0 ef1`uc ]
+"104 Microwave.c
+[; ;Microwave.c: 104:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
 [c E3171 0 1 2 .. ]
 [n E3171 . DO_LAMP DO_HEATER DO_MOTOR  ]
 [c E3167 0 1 .. ]
@@ -21,9 +27,82 @@ Version 4.0 HI-TECH Software Intermediate Code
 "3847
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 3847: extern volatile unsigned char TRISC __attribute__((address(0xF94)));
 [v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
-"42 ./DO.h
-[; ;./DO.h: 42: void DO_SetState(DO_t DO,LEDState_t state);
-[v _DO_SetState `(v ~T0 @X0 0 ef2`E3171`E3167 ]
+"12 Microwave.c
+[p x PLLDIV = 1 ]
+"13
+[p x CPUDIV = OSC1_PLL2 ]
+"14
+[p x USBDIV = 1 ]
+"17
+[p x FOSC = HS ]
+"18
+[p x FCMEN = OFF ]
+"19
+[p x IESO = OFF ]
+"22
+[p x PWRT = OFF ]
+"23
+[p x BOR = ON ]
+"24
+[p x BORV = 3 ]
+"25
+[p x VREGEN = OFF ]
+"28
+[p x WDT = OFF ]
+"29
+[p x WDTPS = 32768 ]
+"32
+[p x CCP2MX = ON ]
+"33
+[p x PBADEN = ON ]
+"34
+[p x LPT1OSC = OFF ]
+"35
+[p x MCLRE = ON ]
+"38
+[p x STVREN = ON ]
+"39
+[p x LVP = ON ]
+"40
+[p x ICPRT = OFF ]
+"41
+[p x XINST = OFF ]
+"44
+[p x CP0 = OFF ]
+"45
+[p x CP1 = OFF ]
+"46
+[p x CP2 = OFF ]
+"47
+[p x CP3 = OFF ]
+"50
+[p x CPB = OFF ]
+"51
+[p x CPD = OFF ]
+"54
+[p x WRT0 = OFF ]
+"55
+[p x WRT1 = OFF ]
+"56
+[p x WRT2 = OFF ]
+"57
+[p x WRT3 = OFF ]
+"60
+[p x WRTC = OFF ]
+"61
+[p x WRTB = OFF ]
+"62
+[p x WRTD = OFF ]
+"65
+[p x EBTR0 = OFF ]
+"66
+[p x EBTR1 = OFF ]
+"67
+[p x EBTR2 = OFF ]
+"68
+[p x EBTR3 = OFF ]
+"71
+[p x EBTRB = OFF ]
 "54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 54: __asm("SPPDATA equ 0F62h");
 [; <" SPPDATA equ 0F62h ;# ">
@@ -535,40 +614,55 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 8893: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
 [v $root$_main `(v ~T0 @X0 0 e ]
-"13 Microwave.c
-[; ;Microwave.c: 13: void main(void) {
+"85 Microwave.c
+[; ;Microwave.c: 85: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"17
-[; ;Microwave.c: 17:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
-[e ( _DO_Init (4 , , , , . `E3171 0 &U _PORTB &U _TRISB -> -> 0 `i `uc . `E3167 0 ]
-"19
-[; ;Microwave.c: 19:     DO_Init(DO_HEATER,&(PORTB),&(TRISB),(1),DO_OFF);
-[e ( _DO_Init (4 , , , , . `E3171 1 &U _PORTB &U _TRISB -> -> 1 `i `uc . `E3167 0 ]
-"21
-[; ;Microwave.c: 21:     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
-[e ( _DO_Init (4 , , , , . `E3171 2 &U _PORTC &U _TRISC -> -> 2 `i `uc . `E3167 0 ]
-"23
-[; ;Microwave.c: 23:     DO_SetState(DO_MOTOR,DO_ON);
-[e ( _DO_SetState (2 , . `E3171 2 . `E3167 1 ]
-"24
-[; ;Microwave.c: 24:     while(1)
+"88
+[; ;Microwave.c: 88:     LCD_Init();
+[e ( _LCD_Init ..  ]
+"89
+[; ;Microwave.c: 89:     LCD_Write_Char('a');
+[e ( _LCD_Write_Char (1 -> -> 97 `ui `uc ]
+"91
+[; ;Microwave.c: 91:     while(1)
 [e :U 370 ]
-"25
-[; ;Microwave.c: 25:     {
+"92
+[; ;Microwave.c: 92:     {
 {
-"27
-[; ;Microwave.c: 27:     }
+"94
+[; ;Microwave.c: 94:     }
 }
 [e :U 369 ]
 [e $U 370  ]
 [e :U 371 ]
-"28
-[; ;Microwave.c: 28:     return;
+"95
+[; ;Microwave.c: 95:     return;
 [e $UE 368  ]
-"29
-[; ;Microwave.c: 29: }
+"96
+[; ;Microwave.c: 96: }
 [e :UE 368 ]
+}
+"99
+[; ;Microwave.c: 99: void init(void)
+[v _init `(v ~T0 @X0 1 ef ]
+"100
+[; ;Microwave.c: 100: {
+{
+[e :U _init ]
+[f ]
+"104
+[; ;Microwave.c: 104:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
+[e ( _DO_Init (4 , , , , . `E3171 0 &U _PORTB &U _TRISB -> -> 0 `i `uc . `E3167 0 ]
+"106
+[; ;Microwave.c: 106:     DO_Init(DO_HEATER,&(PORTB),&(TRISB),(1),DO_OFF);
+[e ( _DO_Init (4 , , , , . `E3171 1 &U _PORTB &U _TRISB -> -> 1 `i `uc . `E3167 0 ]
+"108
+[; ;Microwave.c: 108:     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
+[e ( _DO_Init (4 , , , , . `E3171 2 &U _PORTC &U _TRISC -> -> 2 `i `uc . `E3167 0 ]
+"110
+[; ;Microwave.c: 110: }
+[e :UE 372 ]
 }

@@ -13,7 +13,18 @@ DO_MOTOR 2
 DO_OFF 0
 DO_ON 1
 ]
-"17 D:\bootcamp\final_project\Microwave\Microwave.c
+"50 D:\bootcamp\final_project\Microwave\LCD.c
+[e E3173 . `uc
+LCD_Clear 1
+LCD_Home 2
+LCD_EntryMode 6
+LCD_DisplayOff 8
+LCD_DisplayOn 12
+LCD_FunctionReset 48
+LCD_FunctionSet8bit 56
+LCD_SetCursor 128
+]
+"104 D:\bootcamp\final_project\Microwave\Microwave.c
 [e E3171 . `uc
 DO_LAMP 0
 DO_HEATER 1
@@ -49,16 +60,28 @@ DO_ON 1
 [v ___omul __omul `(uo  1 e 8 0 ]
 "24 D:\bootcamp\final_project\Microwave\DO.c
 [v _DO_Init DO_Init `(uc  1 e 1 0 ]
-"37
-[v _DO_SetState DO_SetState `(v  1 e 1 0 ]
-"30 D:\bootcamp\final_project\Microwave\GPIO.c
+"10 D:\bootcamp\final_project\Microwave\GPIO.c
+[v _GPIO_Init_Port GPIO_Init_Port `(uc  1 e 1 0 ]
+"30
 [v _GPIO_Init_Pin GPIO_Init_Pin `(uc  1 e 1 0 ]
-"13 D:\bootcamp\final_project\Microwave\Microwave.c
+"25 D:\bootcamp\final_project\Microwave\LCD.c
+[v _LCD_Init LCD_Init `(v  1 e 1 0 ]
+"89
+[v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
+"119
+[v _LCD_Write_Instruction LCD_Write_Instruction `(v  1 e 1 0 ]
+"136
+[v _LCD_Write_Byte LCD_Write_Byte `(v  1 e 1 0 ]
+"85 D:\bootcamp\final_project\Microwave\Microwave.c
 [v _main main `(v  1 e 1 0 ]
 "2453 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
 "2563
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
+"2705
+[v _PORTD PORTD `VEuc  1 e 1 @3971 ]
+"2826
+[v _PORTE PORTE `VEuc  1 e 1 @3972 ]
 "3427
 [v _TRISA TRISA `VEuc  1 e 1 @3986 ]
 "3625
@@ -69,38 +92,54 @@ DO_ON 1
 [v _TRISD TRISD `VEuc  1 e 1 @3989 ]
 "4223
 [v _TRISE TRISE `VEuc  1 e 1 @3990 ]
-[s S39 . 5 `*.39VEuc 1 portRegPtr 2 0 `*.39VEuc 1 dirRegPtr 2 2 `uc 1 pin 1 4 ]
+[s S45 . 5 `*.39VEuc 1 portRegPtr 2 0 `*.39VEuc 1 dirRegPtr 2 2 `uc 1 pin 1 4 ]
 "21 D:\bootcamp\final_project\Microwave\DO.c
-[v _DOArray DOArray `[3]S39  1 s 15 DOArray ]
-"13 D:\bootcamp\final_project\Microwave\Microwave.c
+[v _DOArray DOArray `[3]S45  1 s 15 DOArray ]
+"85 D:\bootcamp\final_project\Microwave\Microwave.c
 [v _main main `(v  1 e 1 0 ]
 {
-"29
+"96
 } 0
-"37 D:\bootcamp\final_project\Microwave\DO.c
-[v _DO_SetState DO_SetState `(v  1 e 1 0 ]
+"89 D:\bootcamp\final_project\Microwave\LCD.c
+[v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
 {
-[v DO_SetState@DO DO `E3171  1 a 1 wreg ]
-[v DO_SetState@DO DO `E3171  1 a 1 wreg ]
-[v DO_SetState@state state `E3167  1 p 1 0 ]
-"39
-[v DO_SetState@DO DO `E3171  1 a 1 10 ]
-"40
+[v LCD_Write_Char@ch ch `uc  1 a 1 wreg ]
+[v LCD_Write_Char@ch ch `uc  1 a 1 wreg ]
+"92
+[v LCD_Write_Char@ch ch `uc  1 a 1 1 ]
+"97
 } 0
-"24
-[v _DO_Init DO_Init `(uc  1 e 1 0 ]
+"25
+[v _LCD_Init LCD_Init `(v  1 e 1 0 ]
 {
-[v DO_Init@DO DO `E3171  1 a 1 wreg ]
-[v DO_Init@DO DO `E3171  1 a 1 wreg ]
-[v DO_Init@port port `*.39VEuc  1 p 2 10 ]
-[v DO_Init@dir dir `*.39VEuc  1 p 2 12 ]
-[v DO_Init@pinN pinN `uc  1 p 1 14 ]
-[v DO_Init@state state `E3167  1 p 1 15 ]
-"26
-[v DO_Init@DO DO `E3171  1 a 1 21 ]
-"32
+"80
 } 0
-"30 D:\bootcamp\final_project\Microwave\GPIO.c
+"119
+[v _LCD_Write_Instruction LCD_Write_Instruction `(v  1 e 1 0 ]
+{
+[v LCD_Write_Instruction@inst inst `E3173  1 a 1 wreg ]
+[v LCD_Write_Instruction@inst inst `E3173  1 a 1 wreg ]
+"122
+[v LCD_Write_Instruction@inst inst `E3173  1 a 1 1 ]
+"127
+} 0
+"136
+[v _LCD_Write_Byte LCD_Write_Byte `(v  1 e 1 0 ]
+{
+[v LCD_Write_Byte@byte byte `uc  1 a 1 wreg ]
+[v LCD_Write_Byte@byte byte `uc  1 a 1 wreg ]
+"142
+[v LCD_Write_Byte@byte byte `uc  1 a 1 0 ]
+"153
+} 0
+"10 D:\bootcamp\final_project\Microwave\GPIO.c
+[v _GPIO_Init_Port GPIO_Init_Port `(uc  1 e 1 0 ]
+{
+[v GPIO_Init_Port@DirRegAddress DirRegAddress `*.39VEuc  1 p 2 0 ]
+[v GPIO_Init_Port@dir dir `uc  1 p 1 2 ]
+"27
+} 0
+"30
 [v _GPIO_Init_Pin GPIO_Init_Pin `(uc  1 e 1 0 ]
 {
 [v GPIO_Init_Pin@DirRegAddress DirRegAddress `*.39VEuc  1 p 2 0 ]

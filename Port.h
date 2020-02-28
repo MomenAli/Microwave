@@ -31,6 +31,27 @@
 #define  MOTOR_DIR  GPIO_PORTC_DIR
 #define  MOTOR_PIN  PIN_2
 
+//LCD pins
+//EN
+#define LCD_EN_PORT GPIO_PORTE_DATA
+#define LCD_EN_DIR  GPIO_PORTE_DIR
+#define LCD_EN_PIN  PIN_1
+//RS
+#define LCD_RS_PORT GPIO_PORTE_DATA
+#define LCD_RS_DIR  GPIO_PORTE_DIR
+#define LCD_RS_PIN  PIN_2
+//LCD data pins
+
+/* if 4 bit mode remove the below comment 
+ * else comment define LCD_MODE_4_BIT
+ */ 
+//#define LCD_MODE_4_BIT
+#define LCD_DATA_PORT GPIO_PORTD_DATA
+#define LCD_DATA_DIR  GPIO_PORTD_DIR
+#ifdef LCD_MODE_4_BIT
+#define LCD_NIBBLE_NUM    (1)
+#endif
+
 
 
 #endif	/* PORT_H */

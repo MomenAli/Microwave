@@ -13,36 +13,24 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-// TODO Insert appropriate #include <>
+typedef enum 
+{
+    LCD_Clear           = 0b00000001,          // replace all characters with ASCII 'space'
+    LCD_Home            = 0b00000010,          // return cursor to first position on first line
+    LCD_EntryMode       = 0b00000110,          // shift cursor from left to right on read/write
+    LCD_DisplayOff      = 0b00001000,          // turn display off
+    LCD_DisplayOn       = 0b00001100,          // display on, cursor off, don't blink character
+    LCD_FunctionReset   = 0b00110000,          // reset the LCD
+    LCD_FunctionSet8bit = 0b00111000,          // 8-bit data, 2-line display, 5 x 7 font
+    LCD_SetCursor       = 0b10000000,          // set cursor position
+}LCD_Instruction_t;
 
-// TODO Insert C++ class definitions if appropriate
 
-// TODO Insert declarations
-
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
-
-    <p><b>Description:</b></p>
-
-    <p><b>Precondition:</b></p>
-
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
- */
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
-
+void LCD_Init(void);
+void LCD_Write_Char(uint8 ch);
+void LCD_Write_String(uint8 * str);
+void LCD_Write_Instruction(LCD_Instruction_t inst);
+void LCD_Write_Byte(uint8 byte);
 
 #endif	/* LCD_H */
 

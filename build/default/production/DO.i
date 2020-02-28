@@ -5672,9 +5672,10 @@ void DO_update(void);
 # 11 "DO.c" 2
 
 # 1 "./GPIO.h" 1
-# 32 "./GPIO.h"
+# 37 "./GPIO.h"
 uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
 uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
 # 12 "DO.c" 2
 # 21 "DO.c"
 static DOStruct_t DOArray[(3)];

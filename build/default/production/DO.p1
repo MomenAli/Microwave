@@ -9,8 +9,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E3171 . DO_LAMP DO_HEATER DO_MOTOR  ]
 [c E3167 0 1 .. ]
 [n E3167 . DO_OFF DO_ON  ]
-"33 ./GPIO.h
-[; ;./GPIO.h: 33: uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+"38 ./GPIO.h
+[; ;./GPIO.h: 38: uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
 [v _GPIO_Init_Pin `(uc ~T0 @X0 0 ef3`*Vuc`uc`uc ]
 "54 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 54: __asm("SPPDATA equ 0F62h");

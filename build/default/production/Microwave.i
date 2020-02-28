@@ -7,8 +7,67 @@
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "Microwave.c" 2
+# 12 "Microwave.c"
+#pragma config PLLDIV = 1
+#pragma config CPUDIV = OSC1_PLL2
+#pragma config USBDIV = 1
 
 
+#pragma config FOSC = HS
+#pragma config FCMEN = OFF
+#pragma config IESO = OFF
+
+
+#pragma config PWRT = OFF
+#pragma config BOR = ON
+#pragma config BORV = 3
+#pragma config VREGEN = OFF
+
+
+#pragma config WDT = OFF
+#pragma config WDTPS = 32768
+
+
+#pragma config CCP2MX = ON
+#pragma config PBADEN = ON
+#pragma config LPT1OSC = OFF
+#pragma config MCLRE = ON
+
+
+#pragma config STVREN = ON
+#pragma config LVP = ON
+#pragma config ICPRT = OFF
+#pragma config XINST = OFF
+
+
+#pragma config CP0 = OFF
+#pragma config CP1 = OFF
+#pragma config CP2 = OFF
+#pragma config CP3 = OFF
+
+
+#pragma config CPB = OFF
+#pragma config CPD = OFF
+
+
+#pragma config WRT0 = OFF
+#pragma config WRT1 = OFF
+#pragma config WRT2 = OFF
+#pragma config WRT3 = OFF
+
+
+#pragma config WRTC = OFF
+#pragma config WRTB = OFF
+#pragma config WRTD = OFF
+
+
+#pragma config EBTR0 = OFF
+#pragma config EBTR1 = OFF
+#pragma config EBTR2 = OFF
+#pragma config EBTR3 = OFF
+
+
+#pragma config EBTRB = OFF
 
 
 
@@ -5625,7 +5684,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 8 "Microwave.c" 2
+# 76 "Microwave.c" 2
 
 
 # 1 "./DO.h" 1
@@ -5666,13 +5725,53 @@ uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LED
 uint8 DO_GetState(DO_t DO);
 void DO_SetState(DO_t DO,LEDState_t state);
 void DO_update(void);
-# 10 "Microwave.c" 2
+# 78 "Microwave.c" 2
 
 # 1 "./Port.h" 1
-# 11 "Microwave.c" 2
+# 79 "Microwave.c" 2
 
+# 1 "./LCD.h" 1
+# 16 "./LCD.h"
+typedef enum
+{
+    LCD_Clear = 0b00000001,
+    LCD_Home = 0b00000010,
+    LCD_EntryMode = 0b00000110,
+    LCD_DisplayOff = 0b00001000,
+    LCD_DisplayOn = 0b00001100,
+    LCD_FunctionReset = 0b00110000,
+    LCD_FunctionSet8bit = 0b00111000,
+    LCD_SetCursor = 0b10000000,
+}LCD_Instruction_t;
+
+
+void LCD_Init(void);
+void LCD_Write_Char(uint8 ch);
+void LCD_Write_String(uint8 * str);
+void LCD_Write_Instruction(LCD_Instruction_t inst);
+void LCD_Write_Byte(uint8 byte);
+# 80 "Microwave.c" 2
+
+
+
+void init(void);
 
 void main(void) {
+
+
+    LCD_Init();
+    LCD_Write_Char('a');
+
+    while(1)
+    {
+
+    }
+    return;
+}
+
+
+void init(void)
+{
 
 
 
@@ -5682,10 +5781,4 @@ void main(void) {
 
     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
 
-    DO_SetState(DO_MOTOR,DO_ON);
-    while(1)
-    {
-
-    }
-    return;
 }
