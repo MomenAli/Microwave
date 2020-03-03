@@ -5630,11 +5630,11 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 14 "./Main.h" 2
-# 68 "./Main.h"
+# 69 "./Main.h"
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 15 "./GPIO.h" 2
-# 37 "./GPIO.h"
+# 38 "./GPIO.h"
 uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
 uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
 uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
@@ -5693,7 +5693,7 @@ uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 di
     }
     else
     {
-        ((*DirRegAddress)= ((*DirRegAddress)& ~(0xF<<(nibble_num*4)))); ((*DirRegAddress)=((*DirRegAddress)|(((dir)?(~0):(0))&(0xF<<(nibble_num*4)))));;
+        ((*DirRegAddress)= ((*DirRegAddress)& ~(0xF<<(nibble_num*4)))); ((*DirRegAddress)=((*DirRegAddress)|(((dir)?(~0):(0))&(0xF<<(nibble_num*4)))));
     }
     return ret;
 

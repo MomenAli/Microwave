@@ -29,9 +29,10 @@
 
 /*GPIO nibble operation*/
 /* N = 0 first nibble , N = 1 second nibble*/
-#define GPIO_Write_Nibble(DATA_REG , DATA , N)                ((DATA_REG)=((DATA_REG)|((DATA<<(N*4))&(0xF<<(N*4))))
+#define GPIO_Write_Nibble(DATA_REG , DATA , N)                ((DATA_REG)=((DATA_REG)&~(0xF<<(N*4))));\
+                                                              ((DATA_REG)=((DATA_REG)|((DATA<<(N*4))&(0xF<<(N*4)))))
 #define GPIO_Set_Dir_Nibble(DIRECTION_REG , N, DIRECTION)     ((DIRECTION_REG)= ((DIRECTION_REG)& ~(0xF<<(N*4))));\
-                                                              ((DIRECTION_REG)=((DIRECTION_REG)|(((DIRECTION)?(~0):(0))&(0xF<<(N*4)))));
+                                                              ((DIRECTION_REG)=((DIRECTION_REG)|(((DIRECTION)?(~0):(0))&(0xF<<(N*4)))))
                                                                                 
 
 uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress/*direction register address*/,uint8 dir/* DIRECTION*/);

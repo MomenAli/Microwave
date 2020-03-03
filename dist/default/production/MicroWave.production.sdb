@@ -13,18 +13,38 @@ DO_MOTOR 2
 DO_OFF 0
 DO_ON 1
 ]
-"50 D:\bootcamp\final_project\Microwave\LCD.c
-[e E3173 . `uc
+"88 D:\bootcamp\final_project\Microwave\LCD.c
+[e E3182 . `uc
 LCD_Clear 1
 LCD_Home 2
 LCD_EntryMode 6
 LCD_DisplayOff 8
 LCD_DisplayOn 12
 LCD_FunctionReset 48
-LCD_FunctionSet8bit 56
+LCD_FunctionSet4bit 40
 LCD_SetCursor 128
 ]
-"104 D:\bootcamp\final_project\Microwave\Microwave.c
+"363
+[e E3173 . `uc
+LCD_MOTOR1 0
+LCD_MOTOR2 1
+LCD_MOTOR3 2
+LCD_MOTOR4 3
+LCD_LAMP 4
+LCD_HEATER 5
+LCD_DOOR 6
+]
+"89 D:\bootcamp\final_project\Microwave\Microwave.c
+[e E3188 . `uc
+LCD_MOTOR1 0
+LCD_MOTOR2 1
+LCD_MOTOR3 2
+LCD_MOTOR4 3
+LCD_LAMP 4
+LCD_HEATER 5
+LCD_DOOR 6
+]
+"116
 [e E3171 . `uc
 DO_LAMP 0
 DO_HEATER 1
@@ -34,6 +54,8 @@ DO_MOTOR 2
 DO_OFF 0
 DO_ON 1
 ]
+"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
 "4 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c99\common\fleq.c
 [v ___fleq __fleq `(b  1 e 0 0 ]
 "62 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c99\common\float.c
@@ -60,18 +82,30 @@ DO_ON 1
 [v ___omul __omul `(uo  1 e 8 0 ]
 "24 D:\bootcamp\final_project\Microwave\DO.c
 [v _DO_Init DO_Init `(uc  1 e 1 0 ]
-"10 D:\bootcamp\final_project\Microwave\GPIO.c
-[v _GPIO_Init_Port GPIO_Init_Port `(uc  1 e 1 0 ]
-"30
+"30 D:\bootcamp\final_project\Microwave\GPIO.c
 [v _GPIO_Init_Pin GPIO_Init_Pin `(uc  1 e 1 0 ]
-"25 D:\bootcamp\final_project\Microwave\LCD.c
+"49
+[v _GPIO_Init_Nibble GPIO_Init_Nibble `(uc  1 e 1 0 ]
+"62 D:\bootcamp\final_project\Microwave\LCD.c
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
-"89
-[v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
-"119
-[v _LCD_Write_Instruction LCD_Write_Instruction `(v  1 e 1 0 ]
-"136
-[v _LCD_Write_Byte LCD_Write_Byte `(v  1 e 1 0 ]
+"170
+[v _LCD_Write_Symbol LCD_Write_Symbol `(v  1 s 1 LCD_Write_Symbol ]
+"208
+[v _LCD_Write_Instruction LCD_Write_Instruction `(v  1 s 1 LCD_Write_Instruction ]
+"230
+[v _LCD_Data_Out LCD_Data_Out `(v  1 s 1 LCD_Data_Out ]
+"265
+[v _LCD_SetSymbol LCD_SetSymbol `(v  1 e 1 0 ]
+"279
+[v _LCD_SetString LCD_SetString `(v  1 e 1 0 ]
+"299
+[v _LCD_SetDDRAM LCD_SetDDRAM `(v  1 s 1 LCD_SetDDRAM ]
+"313
+[v _LCD_Update LCD_Update `(v  1 e 1 0 ]
+"351
+[v _LCD_Init_Custom_Sym LCD_Init_Custom_Sym `(v  1 s 1 LCD_Init_Custom_Sym ]
+"454
+[v _LCD_SetCGRAM LCD_SetCGRAM `(v  1 s 1 LCD_SetCGRAM ]
 "85 D:\bootcamp\final_project\Microwave\Microwave.c
 [v _main main `(v  1 e 1 0 ]
 "2453 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h
@@ -95,55 +129,141 @@ DO_ON 1
 [s S45 . 5 `*.39VEuc 1 portRegPtr 2 0 `*.39VEuc 1 dirRegPtr 2 2 `uc 1 pin 1 4 ]
 "21 D:\bootcamp\final_project\Microwave\DO.c
 [v _DOArray DOArray `[3]S45  1 s 15 DOArray ]
+"24 D:\bootcamp\final_project\Microwave\LCD.c
+[v _LCD_Data_Buffer LCD_Data_Buffer `[2][40]uc  1 s 80 LCD_Data_Buffer ]
+"26
+[v _update_flag update_flag `[2][21]ui  1 s 84 update_flag ]
+"28
+[v _line_counter line_counter `uc  1 s 1 line_counter ]
+"30
+[v _tick_counter tick_counter `i  1 s 2 tick_counter ]
+"33
+[v _lines_offset_adresses lines_offset_adresses `[2]uc  1 s 2 lines_offset_adresses ]
 "85 D:\bootcamp\final_project\Microwave\Microwave.c
 [v _main main `(v  1 e 1 0 ]
 {
-"96
+"108
 } 0
-"89 D:\bootcamp\final_project\Microwave\LCD.c
-[v _LCD_Write_Char LCD_Write_Char `(v  1 e 1 0 ]
+"313 D:\bootcamp\final_project\Microwave\LCD.c
+[v _LCD_Update LCD_Update `(v  1 e 1 0 ]
 {
-[v LCD_Write_Char@ch ch `uc  1 a 1 wreg ]
-[v LCD_Write_Char@ch ch `uc  1 a 1 wreg ]
-"92
-[v LCD_Write_Char@ch ch `uc  1 a 1 1 ]
-"97
+"332
+[v LCD_Update@address address `uc  1 a 1 12 ]
+"315
+[v LCD_Update@j j `uc  1 a 1 15 ]
+[v LCD_Update@i i `uc  1 a 1 14 ]
+[v LCD_Update@updated updated `uc  1 a 1 13 ]
+"349
 } 0
-"25
+"299
+[v _LCD_SetDDRAM LCD_SetDDRAM `(v  1 s 1 LCD_SetDDRAM ]
+{
+[v LCD_SetDDRAM@ADDRESS ADDRESS `uc  1 a 1 wreg ]
+[v LCD_SetDDRAM@ADDRESS ADDRESS `uc  1 a 1 wreg ]
+"301
+[v LCD_SetDDRAM@ADDRESS ADDRESS `uc  1 a 1 2 ]
+"304
+} 0
+"265
+[v _LCD_SetSymbol LCD_SetSymbol `(v  1 e 1 0 ]
+{
+[v LCD_SetSymbol@sym sym `uc  1 a 1 wreg ]
+[v LCD_SetSymbol@sym sym `uc  1 a 1 wreg ]
+[v LCD_SetSymbol@row row `uc  1 p 1 8 ]
+[v LCD_SetSymbol@column column `uc  1 p 1 9 ]
+"267
+[v LCD_SetSymbol@sym sym `uc  1 a 1 15 ]
+"270
+} 0
+"279
+[v _LCD_SetString LCD_SetString `(v  1 e 1 0 ]
+{
+"281
+[v LCD_SetString@i i `i  1 a 2 18 ]
+"279
+[v LCD_SetString@sym sym `*.32uc  1 p 2 8 ]
+[v LCD_SetString@row row `uc  1 p 1 10 ]
+[v LCD_SetString@column column `uc  1 p 1 11 ]
+[v LCD_SetString@number number `uc  1 p 1 12 ]
+"291
+} 0
+"7 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"10
+[v ___awdiv@quotient quotient `i  1 a 2 6 ]
+"11
+[v ___awdiv@sign sign `uc  1 a 1 5 ]
+[v ___awdiv@counter counter `uc  1 a 1 4 ]
+"7
+[v ___awdiv@dividend dividend `i  1 p 2 0 ]
+[v ___awdiv@divisor divisor `i  1 p 2 2 ]
+"41
+} 0
+"62 D:\bootcamp\final_project\Microwave\LCD.c
 [v _LCD_Init LCD_Init `(v  1 e 1 0 ]
 {
-"80
+"161
 } 0
-"119
-[v _LCD_Write_Instruction LCD_Write_Instruction `(v  1 e 1 0 ]
+"351
+[v _LCD_Init_Custom_Sym LCD_Init_Custom_Sym `(v  1 s 1 LCD_Init_Custom_Sym ]
 {
-[v LCD_Write_Instruction@inst inst `E3173  1 a 1 wreg ]
-[v LCD_Write_Instruction@inst inst `E3173  1 a 1 wreg ]
-"122
-[v LCD_Write_Instruction@inst inst `E3173  1 a 1 1 ]
-"127
+"355
+[v LCD_Init_Custom_Sym@data data `[8]uc  1 a 8 3 ]
+"354
+[v LCD_Init_Custom_Sym@i i `i  1 a 2 11 ]
+[v LCD_Init_Custom_Sym@F3257 F3257 `[8]uc  1 s 8 F3257 ]
+"453
 } 0
-"136
-[v _LCD_Write_Byte LCD_Write_Byte `(v  1 e 1 0 ]
+"170
+[v _LCD_Write_Symbol LCD_Write_Symbol `(v  1 s 1 LCD_Write_Symbol ]
 {
-[v LCD_Write_Byte@byte byte `uc  1 a 1 wreg ]
-[v LCD_Write_Byte@byte byte `uc  1 a 1 wreg ]
-"142
-[v LCD_Write_Byte@byte byte `uc  1 a 1 0 ]
-"153
+[v LCD_Write_Symbol@sym sym `uc  1 a 1 wreg ]
+[v LCD_Write_Symbol@sym sym `uc  1 a 1 wreg ]
+"173
+[v LCD_Write_Symbol@sym sym `uc  1 a 1 1 ]
+"186
 } 0
-"10 D:\bootcamp\final_project\Microwave\GPIO.c
-[v _GPIO_Init_Port GPIO_Init_Port `(uc  1 e 1 0 ]
+"454
+[v _LCD_SetCGRAM LCD_SetCGRAM `(v  1 s 1 LCD_SetCGRAM ]
 {
-[v GPIO_Init_Port@DirRegAddress DirRegAddress `*.39VEuc  1 p 2 0 ]
-[v GPIO_Init_Port@dir dir `uc  1 p 1 2 ]
-"27
+[v LCD_SetCGRAM@ADDRESS ADDRESS `uc  1 a 1 wreg ]
+[v LCD_SetCGRAM@ADDRESS ADDRESS `uc  1 a 1 wreg ]
+"456
+[v LCD_SetCGRAM@ADDRESS ADDRESS `uc  1 a 1 2 ]
+"459
 } 0
-"30
+"208
+[v _LCD_Write_Instruction LCD_Write_Instruction `(v  1 s 1 LCD_Write_Instruction ]
+{
+[v LCD_Write_Instruction@inst inst `E3182  1 a 1 wreg ]
+[v LCD_Write_Instruction@inst inst `E3182  1 a 1 wreg ]
+"211
+[v LCD_Write_Instruction@inst inst `E3182  1 a 1 1 ]
+"221
+} 0
+"230
+[v _LCD_Data_Out LCD_Data_Out `(v  1 s 1 LCD_Data_Out ]
+{
+[v LCD_Data_Out@byte byte `uc  1 a 1 wreg ]
+[v LCD_Data_Out@byte byte `uc  1 a 1 wreg ]
+"234
+[v LCD_Data_Out@byte byte `uc  1 a 1 0 ]
+"257
+} 0
+"30 D:\bootcamp\final_project\Microwave\GPIO.c
 [v _GPIO_Init_Pin GPIO_Init_Pin `(uc  1 e 1 0 ]
 {
 [v GPIO_Init_Pin@DirRegAddress DirRegAddress `*.39VEuc  1 p 2 0 ]
 [v GPIO_Init_Pin@pin_number pin_number `uc  1 p 1 2 ]
 [v GPIO_Init_Pin@dir dir `uc  1 p 1 3 ]
 "46
+} 0
+"49
+[v _GPIO_Init_Nibble GPIO_Init_Nibble `(uc  1 e 1 0 ]
+{
+[v GPIO_Init_Nibble@DirRegAddress DirRegAddress `*.39VEuc  1 p 2 0 ]
+[v GPIO_Init_Nibble@nibble_num nibble_num `uc  1 p 1 2 ]
+[v GPIO_Init_Nibble@dir dir `uc  1 p 1 3 ]
+"66
 } 0

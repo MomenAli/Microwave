@@ -5632,11 +5632,11 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./GPIO.h" 1
 # 15 "./GPIO.h"
 # 1 "./Main.h" 1
-# 68 "./Main.h"
+# 69 "./Main.h"
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 15 "./GPIO.h" 2
-# 37 "./GPIO.h"
+# 38 "./GPIO.h"
 uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
 uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
 uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
@@ -5646,27 +5646,70 @@ uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 di
 # 12 "LCD.c" 2
 
 # 1 "./LCD.h" 1
-# 16 "./LCD.h"
+# 22 "./LCD.h"
 typedef enum
 {
+    LCD_MOTOR1,
+    LCD_MOTOR2,
+    LCD_MOTOR3,
+    LCD_MOTOR4,
+    LCD_LAMP,
+    LCD_HEATER,
+    LCD_DOOR
+
+
+
+
+
+
+}LCD_CUSTOM_CHAR;
+
+typedef enum
+{
+
     LCD_Clear = 0b00000001,
     LCD_Home = 0b00000010,
     LCD_EntryMode = 0b00000110,
     LCD_DisplayOff = 0b00001000,
     LCD_DisplayOn = 0b00001100,
     LCD_FunctionReset = 0b00110000,
-    LCD_FunctionSet8bit = 0b00111000,
-    LCD_SetCursor = 0b10000000,
+    LCD_FunctionSet4bit = 0b00101000,
+    LCD_SetCursor = 0b10000000
+# 60 "./LCD.h"
 }LCD_Instruction_t;
 
 
 void LCD_Init(void);
-void LCD_Write_Char(uint8 ch);
-void LCD_Write_String(uint8 * str);
-void LCD_Write_Instruction(LCD_Instruction_t inst);
-void LCD_Write_Byte(uint8 byte);
+void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
+void LCD_Update(void);
 # 13 "LCD.c" 2
-# 25 "LCD.c"
+# 24 "LCD.c"
+static uint8 LCD_Data_Buffer [(2)][(40)];
+
+static uint16 update_flag[(2)][((40)/sizeof(uint16))+1];
+
+static uint8 line_counter = 0;
+
+static int tick_counter = 0;
+
+
+static uint8 lines_offset_adresses [(2)] = {
+                                            0x00 ,
+                                            0x40
+                                            };
+
+
+
+
+
+static void LCD_Write_Symbol(uint8 sym);
+static void LCD_Write_Instruction(LCD_Instruction_t inst);
+static void LCD_Data_Out(uint8 byte);
+static void LCD_SetDDRAM(uint8 ADDRESS);
+static void LCD_Init_Custom_Sym();
+static void LCD_SetCGRAM(uint8 ADDRESS);
+# 62 "LCD.c"
 void LCD_Init(void)
 {
 
@@ -5678,22 +5721,35 @@ void LCD_Init(void)
     GPIO_Init_Pin(&(TRISE),(2),(0));
 
 
+    GPIO_Init_Nibble(&(TRISD),(1),(0));
 
 
-    GPIO_Init_Port(&(TRISD),(0));
-# 48 "LCD.c"
-    _delay((unsigned long)((35)*(8000000/4000.0)));
 
-    LCD_Write_Instruction(LCD_FunctionReset);
-    _delay((unsigned long)((10)*(8000000/4000.0)));
 
-    LCD_Write_Instruction(LCD_FunctionReset);
+
+
+    _delay((unsigned long)((15)*(8000000/4000.0)));
+
+
+    (((PORTE))=((PORTE) & ~(1<<(2)))|(0<<(2)));
+
+    (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
+
+
+    LCD_Data_Out(LCD_FunctionReset);
+    _delay((unsigned long)((5)*(8000000/4000.0)));
+
+    LCD_Data_Out(LCD_FunctionReset);
     _delay((unsigned long)((150)*(8000000/4000000.0)));
 
-    LCD_Write_Instruction(LCD_FunctionReset);
+    LCD_Data_Out(LCD_FunctionReset);
 
 
-    LCD_Write_Instruction(LCD_FunctionSet8bit);
+    LCD_Data_Out(LCD_FunctionSet4bit);
+    _delay((unsigned long)((50)*(8000000/4000000.0)));
+
+
+    LCD_Write_Instruction(LCD_FunctionSet4bit);
     _delay((unsigned long)((50)*(8000000/4000000.0)));
 
 
@@ -5706,64 +5762,252 @@ void LCD_Init(void)
 
 
     LCD_Write_Instruction(LCD_EntryMode);
-    _delay((unsigned long)((50)*(8000000/4000.0)));
+    _delay((unsigned long)((50)*(8000000/4000000.0)));
 
 
 
 
     LCD_Write_Instruction(LCD_DisplayOn);
-    _delay((unsigned long)((50)*(8000000/4000.0)));
+    _delay((unsigned long)((50)*(8000000/4000000.0)));
 
+    LCD_Init_Custom_Sym();
+# 161 "LCD.c"
 }
-# 89 "LCD.c"
-void LCD_Write_Char(uint8 ch)
+# 170 "LCD.c"
+static void LCD_Write_Symbol(uint8 sym)
 {
 
     (((PORTE))=((PORTE) & ~(1<<(2)))|(1<<(2)));
 
     (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
 
-    LCD_Write_Byte(ch);
-}
 
 
+    LCD_Data_Out((sym>>4));
 
+    LCD_Data_Out(sym);
 
-
-
-
-void LCD_Write_String(uint8 str[])
-{
 
 
 
 }
-# 119 "LCD.c"
-void LCD_Write_Instruction(LCD_Instruction_t inst)
+# 208 "LCD.c"
+static void LCD_Write_Instruction(LCD_Instruction_t inst)
 {
 
     (((PORTE))=((PORTE) & ~(1<<(2)))|(0<<(2)));
 
     (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
 
-    LCD_Write_Byte(inst);
+    LCD_Data_Out((inst>>4));
+    LCD_Data_Out(inst);
+
+
+
+
 }
-# 136 "LCD.c"
-void LCD_Write_Byte(uint8 byte)
+# 230 "LCD.c"
+static void LCD_Data_Out(uint8 byte)
 {
 
 
+       (((PORTD))=(((PORTD))&~(0xF<<((1)*4)))); (((PORTD))=(((PORTD))|((byte<<((1)*4))&(0xF<<((1)*4)))));
 
 
-    (((PORTD))=(byte));
+       (((PORTE))=((PORTE) & ~(1<<(1)))|(1<<(1)));
+
+       _delay((unsigned long)((100)*(8000000/4000000.0)));
+
+       (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
+
+       _delay((unsigned long)((1)*(8000000/4000000.0)));
+# 257 "LCD.c"
+}
 
 
-    (((PORTE))=((PORTE) & ~(1<<(1)))|(1<<(1)));
 
-    _delay((unsigned long)((100)*(8000000/4000000.0)));
 
-    (((PORTE))=((PORTE) & ~(1<<(1)))|(0<<(1)));
 
-    _delay((unsigned long)((1)*(8000000/4000000.0)));
 
+
+void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column)
+{
+    if(row >= (2) && column >= (40))return;
+    LCD_Data_Buffer[row][column] = sym;
+    update_flag[row][column/16] |= (0x0001<<(column%16));
+}
+# 279 "LCD.c"
+void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number)
+{
+    int i;
+
+    if(row >= (2) && column >= (40))return;
+
+    for(i=0;i<number;i++)
+    {
+        LCD_Data_Buffer[row][column+i] = sym[i];
+        update_flag[row][(column+i)/16] |= (0x0001<<((column+i)%16));
+    }
+
+}
+
+
+
+
+
+
+
+static void LCD_SetDDRAM(uint8 ADDRESS)
+{
+    ADDRESS &= 0x7f;
+    ADDRESS |= 0x80;
+    LCD_Write_Instruction(ADDRESS);
+}
+# 313 "LCD.c"
+void LCD_Update(void)
+{
+    uint8 j,i,updated = 0;
+    tick_counter += (5);
+    if(tick_counter <= (5))return;
+
+    tick_counter = 0;
+
+    for(j = 0;j<(((40)/16)+1);j++)
+    {
+        if(update_flag[line_counter][j]!=0)
+        {
+
+            for(i=0;i<16;i++)
+            {
+
+                if((update_flag[line_counter][j])&(0x0001<<i))
+                {
+
+                    uint8 address = lines_offset_adresses[line_counter] + ((j*16)+i);
+
+                    LCD_SetDDRAM(address);
+
+                    LCD_Write_Symbol(LCD_Data_Buffer[line_counter][((j*16)+i)]);
+
+                    update_flag[line_counter][j] &= ~(1<<i);
+
+                    updated++;
+                    if(updated == (5) || update_flag[line_counter][j]==0 )break;
+                }
+            }
+        }
+    }
+    line_counter++;
+    if(line_counter == (2))line_counter = 0;
+
+}
+
+static void LCD_Init_Custom_Sym()
+{
+
+    int i;
+    uint8 data[8] = { 0x00,
+                        0x00,
+                        0x00,
+                        0x00,
+                        0x00,
+                        0xF8,
+                        0xF8,
+                        0x00};
+    LCD_SetCGRAM(LCD_MOTOR1*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+
+    data[0] = 0x00;
+    data[1] = 0xF8;
+    data[2] = 0xF8;
+    data[3] = 0x00;
+    data[4] = 0x00;
+    data[5] = 0x00;
+    data[6] = 0x00;
+    data[7] = 0x00;
+    LCD_SetCGRAM(LCD_MOTOR2*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+
+    data[0] = 0x00;
+    data[1] = 0x03;
+    data[2] = 0x03;
+    data[3] = 0x00;
+    data[4] = 0x00;
+    data[5] = 0x00;
+    data[6] = 0x00;
+    data[7] = 0x00;
+    LCD_SetCGRAM(LCD_MOTOR3*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+
+
+    data[0] = 0x00;
+    data[1] = 0x00;
+    data[2] = 0x00;
+    data[3] = 0x00;
+    data[4] = 0x00;
+    data[5] = 0x03;
+    data[6] = 0x03;
+    data[7] = 0x00;
+    LCD_SetCGRAM(LCD_MOTOR4*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+
+
+    data[0] = 0xFF;
+    data[1] = 0x11;
+    data[2] = 0x15;
+    data[3] = 0x15;
+    data[4] = 0x15;
+    data[5] = 0xFF;
+    data[6] = 0xFF;
+    data[7] = 0x04;
+    LCD_SetCGRAM(LCD_LAMP*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+
+
+
+
+
+    data[0] = 0xE9;
+    data[1] = 0xF2;
+    data[2] = 0xE9;
+    data[3] = 0xF2;
+    data[4] = 0x00;
+    data[5] = 0xFF;
+    data[6] = 0xFF;
+    data[7] = 0x0E;
+    LCD_SetCGRAM(LCD_HEATER*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+
+
+
+    data[0] = 0xFF;
+    data[1] = 0x11;
+    data[2] = 0x11;
+    data[3] = 0x11;
+    data[4] = 0x19;
+    data[5] = 0x11;
+    data[6] = 0x11;
+    data[7] = 0xFF;
+    LCD_SetCGRAM(LCD_DOOR*8);
+    for(i =0;i<8;i++){
+        LCD_Write_Symbol(data[i]);
+    }
+}
+static void LCD_SetCGRAM(uint8 ADDRESS)
+{
+    ADDRESS &= 0x3f;
+    ADDRESS |= 0x40;
+    LCD_Write_Instruction(ADDRESS);
 }

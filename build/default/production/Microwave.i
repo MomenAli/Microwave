@@ -5690,7 +5690,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./DO.h" 1
 # 13 "./DO.h"
 # 1 "./Main.h" 1
-# 68 "./Main.h"
+# 69 "./Main.h"
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 13 "./DO.h" 2
@@ -5731,25 +5731,43 @@ void DO_update(void);
 # 79 "Microwave.c" 2
 
 # 1 "./LCD.h" 1
-# 16 "./LCD.h"
+# 22 "./LCD.h"
 typedef enum
 {
+    LCD_MOTOR1,
+    LCD_MOTOR2,
+    LCD_MOTOR3,
+    LCD_MOTOR4,
+    LCD_LAMP,
+    LCD_HEATER,
+    LCD_DOOR
+
+
+
+
+
+
+}LCD_CUSTOM_CHAR;
+
+typedef enum
+{
+
     LCD_Clear = 0b00000001,
     LCD_Home = 0b00000010,
     LCD_EntryMode = 0b00000110,
     LCD_DisplayOff = 0b00001000,
     LCD_DisplayOn = 0b00001100,
     LCD_FunctionReset = 0b00110000,
-    LCD_FunctionSet8bit = 0b00111000,
-    LCD_SetCursor = 0b10000000,
+    LCD_FunctionSet4bit = 0b00101000,
+    LCD_SetCursor = 0b10000000
+# 60 "./LCD.h"
 }LCD_Instruction_t;
 
 
 void LCD_Init(void);
-void LCD_Write_Char(uint8 ch);
-void LCD_Write_String(uint8 * str);
-void LCD_Write_Instruction(LCD_Instruction_t inst);
-void LCD_Write_Byte(uint8 byte);
+void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
+void LCD_Update(void);
 # 80 "Microwave.c" 2
 
 
@@ -5760,11 +5778,23 @@ void main(void) {
 
 
     LCD_Init();
-    LCD_Write_Char('a');
+    LCD_SetSymbol(LCD_MOTOR2,0,3);
 
+    LCD_SetSymbol(LCD_MOTOR1,0,2);
+    LCD_SetSymbol(LCD_HEATER,0,4);
+    LCD_SetSymbol(LCD_MOTOR2,0,5);
+    LCD_SetSymbol(LCD_MOTOR4,0,6);
+    LCD_SetSymbol(LCD_LAMP,0,7);
+    LCD_SetSymbol(LCD_DOOR,0,9);
+    LCD_SetString("Hello",0,10,5);
+
+
+    LCD_SetSymbol('m',1,4);
+    int i = LCD_MOTOR1;
     while(1)
     {
-
+        _delay((unsigned long)((500)*(8000000/4000.0)));
+        LCD_Update();
     }
     return;
 }

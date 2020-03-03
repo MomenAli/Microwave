@@ -86,11 +86,23 @@ void main(void) {
     
     /* test LCD module */
     LCD_Init();
-    LCD_Write_Char('a');
+    LCD_SetSymbol(LCD_MOTOR2,0,3);
     
+    LCD_SetSymbol(LCD_MOTOR1,0,2);
+    LCD_SetSymbol(LCD_HEATER,0,4);
+    LCD_SetSymbol(LCD_MOTOR2,0,5);
+    LCD_SetSymbol(LCD_MOTOR4,0,6);
+    LCD_SetSymbol(LCD_LAMP,0,7);
+    LCD_SetSymbol(LCD_DOOR,0,9);
+    LCD_SetString("Hello",0,10,5);
+    //LCD_SetSymbol('e',0,7);
+    
+    LCD_SetSymbol('m',1,4);
+    int i = LCD_MOTOR1;
     while(1)
     {
-        
+        __delay_ms(500);
+        LCD_Update();
     }
     return;
 }

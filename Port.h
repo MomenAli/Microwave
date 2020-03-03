@@ -45,7 +45,7 @@
 /* if 4 bit mode remove the below comment 
  * else comment define LCD_MODE_4_BIT
  */ 
-//#define LCD_MODE_4_BIT
+#define LCD_MODE_4_BIT
 #define LCD_DATA_PORT GPIO_PORTD_DATA
 #define LCD_DATA_DIR  GPIO_PORTD_DIR
 #ifdef LCD_MODE_4_BIT

@@ -14,6 +14,7 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #define _XTAL_FREQ 8000000
 
+#define OS_TICK (5)
 
 
 
@@ -67,6 +68,7 @@
 /* define some standard types does not depend on the machine */
 typedef unsigned char uint8;
 typedef unsigned int  uint16;
+
 
 
 

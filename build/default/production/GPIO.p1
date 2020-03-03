@@ -668,7 +668,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;GPIO.c: 61:     {
 {
 "62
-[; ;GPIO.c: 62:         ((*DirRegAddress)= ((*DirRegAddress)& ~(0xF<<(nibble_num*4)))); ((*DirRegAddress)=((*DirRegAddress)|(((dir)?(~0):(0))&(0xF<<(nibble_num*4)))));;
+[; ;GPIO.c: 62:         ((*DirRegAddress)= ((*DirRegAddress)& ~(0xF<<(nibble_num*4)))); ((*DirRegAddress)=((*DirRegAddress)|(((dir)?(~0):(0))&(0xF<<(nibble_num*4)))));
 [e = *U _DirRegAddress -> & -> *U _DirRegAddress `i ~ << -> 15 `i * -> _nibble_num `i -> 4 `i `uc ]
 [e = *U _DirRegAddress -> | -> *U _DirRegAddress `i & ? != -> _dir `i -> 0 `i : ~ -> 0 `i -> 0 `i << -> 15 `i * -> _nibble_num `i -> 4 `i `uc ]
 "63
