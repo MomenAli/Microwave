@@ -5631,7 +5631,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./DO.h" 1
 # 13 "./DO.h"
 # 1 "./Main.h" 1
-# 69 "./Main.h"
+# 68 "./Main.h"
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 13 "./DO.h" 2

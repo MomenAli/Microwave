@@ -3,29 +3,30 @@ Version 4.0 HI-TECH Software Intermediate Code
 "63 ./LCD.h
 [; ;./LCD.h: 63: void LCD_Init(void);
 [v _LCD_Init `(v ~T0 @X0 0 ef ]
-"64
-[; ;./LCD.h: 64: void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
-[v _LCD_SetSymbol `(v ~T0 @X0 0 ef3`uc`uc`uc ]
-"89 Microwave.c
-[; ;Microwave.c: 89:     LCD_SetSymbol(LCD_MOTOR2,0,3);
-[c E3188 0 1 2 3 4 5 6 .. ]
-[n E3188 . LCD_MOTOR1 LCD_MOTOR2 LCD_MOTOR3 LCD_MOTOR4 LCD_LAMP LCD_HEATER LCD_DOOR  ]
-"65 ./LCD.h
-[; ;./LCD.h: 65: void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
-[v _LCD_SetString `(v ~T0 @X0 0 ef4`*uc`uc`uc`uc ]
-[v F3152 `(v ~T0 @X0 1 tf1`ul ]
-"187 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18.h
-[v __delay `JF3152 ~T0 @X0 0 e ]
-[p i __delay ]
-"66 ./LCD.h
-[; ;./LCD.h: 66: void LCD_Update(void);
-[v _LCD_Update `(v ~T0 @X0 0 ef ]
-"116 Microwave.c
-[; ;Microwave.c: 116:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
+"84 Microwave.c
+[; ;Microwave.c: 84: void init(void);
+[v _init `(v ~T0 @X0 0 ef ]
+"91
+[; ;Microwave.c: 91:     DO_SetState(DO_MOTOR,DO_ON);
 [c E3171 0 1 2 .. ]
 [n E3171 . DO_LAMP DO_HEATER DO_MOTOR  ]
 [c E3167 0 1 .. ]
 [n E3167 . DO_OFF DO_ON  ]
+"42 ./DO.h
+[; ;./DO.h: 42: void DO_SetState(DO_t DO,LEDState_t state);
+[v _DO_SetState `(v ~T0 @X0 0 ef2`E3171`E3167 ]
+"40 ./OSTimer.h
+[; ;./OSTimer.h: 40: void TMR_Init(void);
+[v _TMR_Init `(v ~T0 @X0 0 ef ]
+"41
+[; ;./OSTimer.h: 41: void TMR_Start(void);
+[v _TMR_Start `(v ~T0 @X0 0 ef ]
+"64 ./LCD.h
+[; ;./LCD.h: 64: void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+[v _LCD_SetSymbol `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"66
+[; ;./LCD.h: 66: void LCD_Update(void);
+[v _LCD_Update `(v ~T0 @X0 0 ef ]
 "40 ./DO.h
 [; ;./DO.h: 40: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state);
 [v _DO_Init `(uc ~T0 @X0 0 ef5`E3171`*Vuc`*Vuc`uc`E3167 ]
@@ -628,90 +629,79 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 8893: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
 [v $root$_main `(v ~T0 @X0 0 e ]
-"85 Microwave.c
-[; ;Microwave.c: 85: void main(void) {
+"86 Microwave.c
+[; ;Microwave.c: 86: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"88
-[; ;Microwave.c: 88:     LCD_Init();
-[e ( _LCD_Init ..  ]
 "89
-[; ;Microwave.c: 89:     LCD_SetSymbol(LCD_MOTOR2,0,3);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 1 `uc -> -> 0 `i `uc -> -> 3 `i `uc ]
+[; ;Microwave.c: 89:     LCD_Init();
+[e ( _LCD_Init ..  ]
+"90
+[; ;Microwave.c: 90:     init();
+[e ( _init ..  ]
 "91
-[; ;Microwave.c: 91:     LCD_SetSymbol(LCD_MOTOR1,0,2);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 0 `uc -> -> 0 `i `uc -> -> 2 `i `uc ]
+[; ;Microwave.c: 91:     DO_SetState(DO_MOTOR,DO_ON);
+[e ( _DO_SetState (2 , . `E3171 2 . `E3167 1 ]
 "92
-[; ;Microwave.c: 92:     LCD_SetSymbol(LCD_HEATER,0,4);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 5 `uc -> -> 0 `i `uc -> -> 4 `i `uc ]
+[; ;Microwave.c: 92:     TMR_Init();
+[e ( _TMR_Init ..  ]
 "93
-[; ;Microwave.c: 93:     LCD_SetSymbol(LCD_MOTOR2,0,5);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 1 `uc -> -> 0 `i `uc -> -> 5 `i `uc ]
-"94
-[; ;Microwave.c: 94:     LCD_SetSymbol(LCD_MOTOR4,0,6);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 3 `uc -> -> 0 `i `uc -> -> 6 `i `uc ]
+[; ;Microwave.c: 93:     TMR_Start();
+[e ( _TMR_Start ..  ]
 "95
-[; ;Microwave.c: 95:     LCD_SetSymbol(LCD_LAMP,0,7);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 4 `uc -> -> 0 `i `uc -> -> 7 `i `uc ]
+[; ;Microwave.c: 95:     LCD_SetSymbol('b',0,0);
+[e ( _LCD_SetSymbol (3 , , -> -> 98 `ui `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 "96
-[; ;Microwave.c: 96:     LCD_SetSymbol(LCD_DOOR,0,9);
-[e ( _LCD_SetSymbol (3 , , -> . `E3188 6 `uc -> -> 0 `i `uc -> -> 9 `i `uc ]
+[; ;Microwave.c: 96:     LCD_SetSymbol('b',1,0);
+[e ( _LCD_SetSymbol (3 , , -> -> 98 `ui `uc -> -> 1 `i `uc -> -> 0 `i `uc ]
 "97
-[; ;Microwave.c: 97:     LCD_SetString("Hello",0,10,5);
-[e ( _LCD_SetString (4 , , , :s 1C -> -> 0 `i `uc -> -> 10 `i `uc -> -> 5 `i `uc ]
-"100
-[; ;Microwave.c: 100:     LCD_SetSymbol('m',1,4);
-[e ( _LCD_SetSymbol (3 , , -> -> 109 `ui `uc -> -> 1 `i `uc -> -> 4 `i `uc ]
-"101
-[; ;Microwave.c: 101:     int i = LCD_MOTOR1;
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> . `E3188 0 `i ]
-"102
-[; ;Microwave.c: 102:     while(1)
-[e :U 370 ]
-"103
-[; ;Microwave.c: 103:     {
-{
-"104
-[; ;Microwave.c: 104:         _delay((unsigned long)((500)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"105
-[; ;Microwave.c: 105:         LCD_Update();
+[; ;Microwave.c: 97:     LCD_SetSymbol('b',1,5);
+[e ( _LCD_SetSymbol (3 , , -> -> 98 `ui `uc -> -> 1 `i `uc -> -> 5 `i `uc ]
+"98
+[; ;Microwave.c: 98:     LCD_Update();
 [e ( _LCD_Update ..  ]
-"106
-[; ;Microwave.c: 106:     }
+"99
+[; ;Microwave.c: 99:     LCD_Update();
+[e ( _LCD_Update ..  ]
+"100
+[; ;Microwave.c: 100:     while(1)
+[e :U 370 ]
+"101
+[; ;Microwave.c: 101:     {
+{
+"103
+[; ;Microwave.c: 103:     }
 }
 [e :U 369 ]
 [e $U 370  ]
 [e :U 371 ]
-"107
-[; ;Microwave.c: 107:     return;
+"104
+[; ;Microwave.c: 104:     return;
 [e $UE 368  ]
-"108
-[; ;Microwave.c: 108: }
+"105
+[; ;Microwave.c: 105: }
 [e :UE 368 ]
 }
-"111
-[; ;Microwave.c: 111: void init(void)
+"108
+[; ;Microwave.c: 108: void init(void)
 [v _init `(v ~T0 @X0 1 ef ]
-"112
-[; ;Microwave.c: 112: {
+"109
+[; ;Microwave.c: 109: {
 {
 [e :U _init ]
 [f ]
-"116
-[; ;Microwave.c: 116:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
+"113
+[; ;Microwave.c: 113:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
 [e ( _DO_Init (4 , , , , . `E3171 0 &U _PORTB &U _TRISB -> -> 0 `i `uc . `E3167 0 ]
-"118
-[; ;Microwave.c: 118:     DO_Init(DO_HEATER,&(PORTB),&(TRISB),(1),DO_OFF);
+"115
+[; ;Microwave.c: 115:     DO_Init(DO_HEATER,&(PORTB),&(TRISB),(1),DO_OFF);
 [e ( _DO_Init (4 , , , , . `E3171 1 &U _PORTB &U _TRISB -> -> 1 `i `uc . `E3167 0 ]
-"120
-[; ;Microwave.c: 120:     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
+"117
+[; ;Microwave.c: 117:     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
 [e ( _DO_Init (4 , , , , . `E3171 2 &U _PORTC &U _TRISC -> -> 2 `i `uc . `E3167 0 ]
-"122
-[; ;Microwave.c: 122: }
+"119
+[; ;Microwave.c: 119: }
 [e :UE 372 ]
 }
-[a 1C 72 101 108 108 111 0 ]

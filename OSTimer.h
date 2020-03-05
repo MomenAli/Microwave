@@ -13,47 +13,35 @@
 #define	XC_HEADER_TEMPLATE_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
+#include "Main.h"
 
-// TODO Insert appropriate #include <>
+/*TIMER INTERUPT FLAG OPERATIONS*/
+#define TMR0_GET_FLAG			(TMR0_I_FLAG)
+#define TMR0_CLEAR_FLAG			(TMR0_I_FLAG = 0)
 
-// TODO Insert C++ class definitions if appropriate
-
-// TODO Insert declarations
-
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
-
-    <p><b>Description:</b></p>
-
-    <p><b>Precondition:</b></p>
-
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
+/* 
+ * Time calculation
+ * timer0 is 16bit => max count is 65,536
+ * CLKO input in the timer0 is (FOSC/4)
+ * XTEL_FREQ = 8000000     => CLKO = 2000000 
+ * we are using pre scaler so CLK =  ( CLKO / PRE SCALER )
+ * PRE SCALER = 2  => CLK = 1000000
+ * TICK TIME = 1 / CLK   => TICK TIME = 1 us
+ * OVERFLOW TIME = TICK TIME * 65,536  => 1 us * 65,536 = 65,536 ms
+ * TICK TIME = 1 us
+ * we need tick every 5 ms 
+ * 5 ms / 1 us = 5000
+ * TMR0 = 65,536 - (TICKS)
  */
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
+#define TMR0_TICK_NUM (5000)
+#define TMR_LOAD_REGISTER(TICKS)		(TMR0_REG = 65,536 - (TICKS))
 
-#ifdef	__cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
-    // TODO If C++ is being used, regular C code needs function names to have C 
-    // linkage so the functions can be used by the c code. 
-
-#ifdef	__cplusplus
-}
-#endif /* __cplusplus */
+void TMR_Init(void);
+void TMR_Start(void);
+void TMR_Stop(void);
+uint8 TMR_CheckOverflow(void);
+void TMR0_ISR(void);
 
 #endif	/* XC_HEADER_TEMPLATE_H */
 

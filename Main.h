@@ -64,11 +64,93 @@
 #define PIN_7 (7)
 
 
-
 /* define some standard types does not depend on the machine */
 typedef unsigned char uint8;
 typedef unsigned int  uint16;
 
+
+/*
+ * Redefine register and configuration bits of TIMER 0
+ * if you use another timer please edit this section 
+ */
+/*
+ * PSA: Timer0 Prescaler Assignment bit
+ * 1 = TImer0 prescaler is NOT assigned. Timer0 clock input bypasses prescaler.
+ * 0 = Timer0 prescaler is assigned. Timer0 clock input comes from prescaler output.
+ */
+#define TMR_PRESCALER_ACTIVE   (PSA = 0)
+
+/*
+ * 
+ *  define the pre scaler as below table 
+ *    _____________________
+ *  | TMR0 RATE | PS2:PS0 |
+ *  |___________|_________|
+ *  |     2     |   000   |
+ *  |___________|_________|
+ *  |     4     |   001   |
+ *  |___________|_________|
+ *  |     .     |    .    |
+ *  |___________|_________|
+ *  |     .     |    .    |
+ *  |___________|_________|
+ *  |    128    |   110   |
+ *  |___________|_________|
+ *  |    256    |   111   |
+ *  |___________|_________|
+ *  
+ */
+/* 
+ * we will use pre scaler 256
+ * edit this if you need to change pre scaler 
+ */
+#define TMR_PRESCALER_256 T0PS2 = 1;\
+                          T0PS1 = 1;\
+                          T0PS0 = 1
+
+
+#define TMR_PRESCALER_2   T0PS2 = 0;\
+                          T0PS1 = 0;\
+                          T0PS0 = 0
+
+/*
+ * timer 0 register
+ */
+#define TMR0_REG    (TMR0)
+/*this flag will be 1 if overflow happened to the timer*/
+#define TMR0_I_FLAG (TMR0IF)
+
+
+/*enable interrupts flag*/
+#define TMR0_ENABLE_INTERRUPT	(TMR0IE = 1)
+/*enable global interrupt flag*/
+#define GLOBAL_INTERRUPT_ENABLE	(GIE = 1)
+
+
+/* CLOCK CONTROL BIT
+ * TOCS = 0  enable internal instruction cycle clock(CLKO)
+ * T0CS = 1  enable external clock from TOCKI pin
+ */
+#define TMR0_ENABLE_CLOCK		(T0CS = 0)
+
+
+
+/* TMR0ON: Timer0 On/Off Control bit
+ * 1 = Enables Timer0
+ * 0 = Stops Timer0
+ */
+#define TMR0_STOP		(TMR0ON = 0)
+#define TMR0_START		(TMR0ON = 1)
+/* 
+ * we don't have any input in RA4
+ * be sure you don't use this pin if you need to stop the timer0
+ */
+
+/* T08BIT: Timer0 8-Bit/16-Bit Control bit
+ * 1 = Timer0 is configured as an 8-bit timer/counter
+ * 0 = Timer0 is configured as a 16-bit timer/counter 
+ */
+#define TMR016BIT        (T08BIT = 1)
 
 
 

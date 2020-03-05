@@ -5690,7 +5690,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./DO.h" 1
 # 13 "./DO.h"
 # 1 "./Main.h" 1
-# 69 "./Main.h"
+# 68 "./Main.h"
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 13 "./DO.h" 2
@@ -5770,6 +5770,15 @@ void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
 void LCD_Update(void);
 # 80 "Microwave.c" 2
 
+# 1 "./OSTimer.h" 1
+# 40 "./OSTimer.h"
+void TMR_Init(void);
+void TMR_Start(void);
+void TMR_Stop(void);
+uint8 TMR_CheckOverflow(void);
+void TMR0_ISR(void);
+# 81 "Microwave.c" 2
+
 
 
 void init(void);
@@ -5778,23 +5787,19 @@ void main(void) {
 
 
     LCD_Init();
-    LCD_SetSymbol(LCD_MOTOR2,0,3);
+    init();
+    DO_SetState(DO_MOTOR,DO_ON);
+    TMR_Init();
+    TMR_Start();
 
-    LCD_SetSymbol(LCD_MOTOR1,0,2);
-    LCD_SetSymbol(LCD_HEATER,0,4);
-    LCD_SetSymbol(LCD_MOTOR2,0,5);
-    LCD_SetSymbol(LCD_MOTOR4,0,6);
-    LCD_SetSymbol(LCD_LAMP,0,7);
-    LCD_SetSymbol(LCD_DOOR,0,9);
-    LCD_SetString("Hello",0,10,5);
-
-
-    LCD_SetSymbol('m',1,4);
-    int i = LCD_MOTOR1;
+    LCD_SetSymbol('b',0,0);
+    LCD_SetSymbol('b',1,0);
+    LCD_SetSymbol('b',1,5);
+    LCD_Update();
+    LCD_Update();
     while(1)
     {
-        _delay((unsigned long)((500)*(8000000/4000.0)));
-        LCD_Update();
+
     }
     return;
 }

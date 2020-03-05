@@ -314,7 +314,7 @@ void LCD_Update(void)
 {   
     uint8 j,i,updated = 0;
     tick_counter += OS_TICK;
-    if(tick_counter <= LCD_UPDATE_TICK)return;
+    if(tick_counter != LCD_UPDATE_TICK)return;
     //reset the tick counter 
     tick_counter = 0;
     //iteration for column flags buffer

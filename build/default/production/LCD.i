@@ -5632,7 +5632,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 1 "./GPIO.h" 1
 # 15 "./GPIO.h"
 # 1 "./Main.h" 1
-# 69 "./Main.h"
+# 68 "./Main.h"
 typedef unsigned char uint8;
 typedef unsigned int uint16;
 # 15 "./GPIO.h" 2
@@ -5868,7 +5868,7 @@ void LCD_Update(void)
 {
     uint8 j,i,updated = 0;
     tick_counter += (5);
-    if(tick_counter <= (5))return;
+    if(tick_counter != (5))return;
 
     tick_counter = 0;
 

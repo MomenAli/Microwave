@@ -880,8 +880,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;LCD.c: 316:     tick_counter += (5);
 [e =+ _tick_counter -> 5 `i ]
 "317
-[; ;LCD.c: 317:     if(tick_counter <= (5))return;
-[e $ ! <= _tick_counter -> 5 `i 381  ]
+[; ;LCD.c: 317:     if(tick_counter != (5))return;
+[e $ ! != _tick_counter -> 5 `i 381  ]
 [e $UE 380  ]
 [e :U 381 ]
 "319

@@ -78,6 +78,7 @@
 #include "DO.h"
 #include "Port.h"
 #include "LCD.h"
+#include "OSTimer.h"
 
 
 void init(void);
@@ -86,23 +87,19 @@ void main(void) {
     
     /* test LCD module */
     LCD_Init();
-    LCD_SetSymbol(LCD_MOTOR2,0,3);
+    init();
+    DO_SetState(DO_MOTOR,DO_ON);
+    TMR_Init();
+    TMR_Start();
     
-    LCD_SetSymbol(LCD_MOTOR1,0,2);
-    LCD_SetSymbol(LCD_HEATER,0,4);
-    LCD_SetSymbol(LCD_MOTOR2,0,5);
-    LCD_SetSymbol(LCD_MOTOR4,0,6);
-    LCD_SetSymbol(LCD_LAMP,0,7);
-    LCD_SetSymbol(LCD_DOOR,0,9);
-    LCD_SetString("Hello",0,10,5);
-    //LCD_SetSymbol('e',0,7);
-    
-    LCD_SetSymbol('m',1,4);
-    int i = LCD_MOTOR1;
+    LCD_SetSymbol('b',0,0);
+    LCD_SetSymbol('b',1,0);
+    LCD_SetSymbol('b',1,5);
+    LCD_Update();
+    LCD_Update();
     while(1)
     {
-        __delay_ms(500);
-        LCD_Update();
+        
     }
     return;
 }

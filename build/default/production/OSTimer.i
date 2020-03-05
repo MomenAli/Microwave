@@ -5628,3 +5628,173 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 9 "OSTimer.c" 2
 
+# 1 "./OSTimer.h" 1
+# 16 "./OSTimer.h"
+# 1 "./Main.h" 1
+# 68 "./Main.h"
+typedef unsigned char uint8;
+typedef unsigned int uint16;
+# 16 "./OSTimer.h" 2
+# 40 "./OSTimer.h"
+void TMR_Init(void);
+void TMR_Start(void);
+void TMR_Stop(void);
+uint8 TMR_CheckOverflow(void);
+void TMR0_ISR(void);
+# 10 "OSTimer.c" 2
+
+
+# 1 "./LCD.h" 1
+# 15 "./LCD.h"
+# 1 "./Port.h" 1
+# 15 "./LCD.h" 2
+
+
+
+
+
+
+
+typedef enum
+{
+    LCD_MOTOR1,
+    LCD_MOTOR2,
+    LCD_MOTOR3,
+    LCD_MOTOR4,
+    LCD_LAMP,
+    LCD_HEATER,
+    LCD_DOOR
+
+
+
+
+
+
+}LCD_CUSTOM_CHAR;
+
+typedef enum
+{
+
+    LCD_Clear = 0b00000001,
+    LCD_Home = 0b00000010,
+    LCD_EntryMode = 0b00000110,
+    LCD_DisplayOff = 0b00001000,
+    LCD_DisplayOn = 0b00001100,
+    LCD_FunctionReset = 0b00110000,
+    LCD_FunctionSet4bit = 0b00101000,
+    LCD_SetCursor = 0b10000000
+# 60 "./LCD.h"
+}LCD_Instruction_t;
+
+
+void LCD_Init(void);
+void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
+void LCD_Update(void);
+# 12 "OSTimer.c" 2
+
+# 1 "./DO.h" 1
+# 21 "./DO.h"
+typedef struct {
+    volatile uint8 * portRegPtr;
+    volatile uint8 * dirRegPtr;
+    uint8 pin;
+}DOStruct_t;
+
+typedef enum{
+
+    DO_OFF = 0,
+    DO_ON = 1
+}LEDState_t;
+
+typedef enum
+{
+    DO_LAMP,
+    DO_HEATER,
+    DO_MOTOR
+}DO_t;
+
+uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state);
+uint8 DO_GetState(DO_t DO);
+void DO_SetState(DO_t DO,LEDState_t state);
+void DO_update(void);
+# 13 "OSTimer.c" 2
+
+
+
+
+static uint16 tempCounter = 0;
+
+
+
+void TMR_Init(void)
+{
+
+
+    (PSA = 0);
+    T0PS2 = 0; T0PS1 = 0; T0PS0 = 0;
+
+    (T0CS = 0);
+
+    (T08BIT = 1);
+
+    (TMR0ON = 0);
+
+}
+
+
+
+void __attribute__((picinterrupt(("")))) TMR0_ISR(void)
+{
+    static uint8 index = 0;
+
+    static uint16 counter = 0;
+
+
+    tempCounter+=(5);
+
+
+
+
+    if(tempCounter >= 1000){
+        tempCounter = 0;
+
+        LCD_SetSymbol(LCD_DOOR,index,counter);
+        counter++;
+        if(counter == 16)
+        {counter=-1;index = 1; }
+
+    }
+
+
+
+    LCD_Update();
+
+    ((TMR0IF) = 0);
+
+    ((TMR0) = 65,536 - ((5000)));
+
+}
+void TMR_Start(void)
+{
+
+    ((TMR0IF) = 0);
+
+    ((TMR0) = 65,536 - ((5000)));
+
+    (TMR0IE = 1);
+    (GIE = 1);
+
+    (TMR0ON = 1);
+
+}
+void TMR_Stop(void)
+{
+
+    (TMR0ON = 0);
+}
+uint8 TMR_CheckOverflow(void)
+{
+
+    return ((TMR0IF));
+}
