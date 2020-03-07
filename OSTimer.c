@@ -11,6 +11,7 @@
 #include "Main.h"
 #include "LCD.h"
 #include "DO.h"
+#include "Keypad.h"
 
 
 /********************* private ***********************/
@@ -44,22 +45,20 @@ void __interrupt() TMR0_ISR(void)
     
     tempCounter+=OS_TICK;
     //tasks 
-    
+    keypad_Update();
+    LCD_Update();
     
     //test code
-    if(tempCounter >= 1000){
+    if(tempCounter >= 4000){
         tempCounter = 0;
         // update lcd as test
-        LCD_SetSymbol(LCD_DOOR,index,counter);
+        LCD_SetSymbol(LCD_DOOR,1,counter);
         counter++;
         if(counter == 16)
-        {counter=-1;index = 1; }
-        
+        {counter=-1;}
     }
-    
     //end of test code
     
-    LCD_Update();
     // reset the overflow flag
     TMR0_CLEAR_FLAG;
     // load the timer register with the tick

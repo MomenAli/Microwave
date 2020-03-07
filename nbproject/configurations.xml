@@ -9,12 +9,13 @@
       <itemPath>GPIO.h</itemPath>
       <itemPath>SW.h</itemPath>
       <itemPath>DO.h</itemPath>
-      <itemPath>KPad.h</itemPath>
       <itemPath>LCD.h</itemPath>
       <itemPath>Disp.h</itemPath>
       <itemPath>Time.h</itemPath>
       <itemPath>MV.h</itemPath>
       <itemPath>OSTimer.h</itemPath>
+      <itemPath>Keypad.h</itemPath>
+      <itemPath>IOPinInterface.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -26,13 +27,13 @@
       <itemPath>GPIO.c</itemPath>
       <itemPath>SW.c</itemPath>
       <itemPath>DO.c</itemPath>
-      <itemPath>KPad.c</itemPath>
       <itemPath>LCD.c</itemPath>
       <itemPath>Disp.c</itemPath>
       <itemPath>Time.c</itemPath>
       <itemPath>MV.c</itemPath>
       <itemPath>OSTimer.c</itemPath>
       <itemPath>Microwave.c</itemPath>
+      <itemPath>Keypad.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

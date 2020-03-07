@@ -1,4 +1,4 @@
-# 1 "KPad.c"
+# 1 "Keypad.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,7 +6,7 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "KPad.c" 2
+# 1 "Keypad.c" 2
 
 
 
@@ -5626,5 +5626,262 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
-# 9 "KPad.c" 2
+# 9 "Keypad.c" 2
 
+# 1 "./Keypad.h" 1
+# 15 "./Keypad.h"
+# 1 "./Main.h" 1
+# 68 "./Main.h"
+typedef unsigned char uint8;
+typedef unsigned int uint16;
+# 15 "./Keypad.h" 2
+# 58 "./Keypad.h"
+typedef enum
+{
+    KP_ONE,
+    KP_TWO,
+    KP_THREE,
+    KP_FOUR,
+    KP_FIVE,
+    KP_SIX,
+    KP_SEVEN,
+    KP_EIGHT,
+    KP_NINE,
+    KP_HASH,
+    KP_ZERO,
+    KP_STAR
+}KP_t;
+
+
+
+
+
+typedef enum
+{
+    SW_RELEASED,
+    SW_PRE_PRESSED,
+    SW_PRESSED,
+    SW_PRE_RELEASED
+}SW_State_t;
+
+
+
+void keypad_Init(void);
+uint8 keypad_getState(KP_t item);
+void keypad_Update(void);
+# 10 "Keypad.c" 2
+
+# 1 "./IOPinInterface.h" 1
+# 23 "./IOPinInterface.h"
+typedef struct {
+    volatile uint8 * portRegPtr;
+    volatile uint8 * dirRegPtr;
+    uint8 pin;
+}IOPinStruct_t;
+# 11 "Keypad.c" 2
+
+# 1 "./Port.h" 1
+# 12 "Keypad.c" 2
+
+# 1 "./GPIO.h" 1
+# 38 "./GPIO.h"
+uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
+uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
+# 13 "Keypad.c" 2
+
+
+# 1 "./LCD.h" 1
+# 22 "./LCD.h"
+typedef enum
+{
+    LCD_MOTOR1,
+    LCD_MOTOR2,
+    LCD_MOTOR3,
+    LCD_MOTOR4,
+    LCD_LAMP,
+    LCD_HEATER,
+    LCD_DOOR
+
+
+
+
+
+
+}LCD_CUSTOM_CHAR;
+
+typedef enum
+{
+
+    LCD_Clear = 0b00000001,
+    LCD_Home = 0b00000010,
+    LCD_EntryMode = 0b00000110,
+    LCD_DisplayOff = 0b00001000,
+    LCD_DisplayOn = 0b00001100,
+    LCD_FunctionReset = 0b00110000,
+    LCD_FunctionSet4bit = 0b00101000,
+    LCD_SetCursor = 0b10000000
+# 60 "./LCD.h"
+}LCD_Instruction_t;
+
+
+void LCD_Init(void);
+void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
+void LCD_Update(void);
+# 15 "Keypad.c" 2
+# 40 "Keypad.c"
+typedef struct
+{
+    uint8 samples[2];
+    uint8 state;
+}KEYPAD_BTN_DATA_t;
+
+
+
+
+
+
+
+typedef struct
+{
+    IOPinStruct_t KP_O_Pins[(3)];
+    IOPinStruct_t KP_I_Pins[(4)];
+}Keypad_Struct_t;
+# 66 "Keypad.c"
+static KEYPAD_BTN_DATA_t KP_Btn_Data [(12)];
+
+
+static Keypad_Struct_t keypad;
+
+
+static uint8 current_column = 0;
+
+
+static uint8 tick_counter = 0;
+
+
+
+
+
+
+void keypad_Init(void)
+{
+
+    (RDPU = 0);
+
+
+
+    keypad.KP_I_Pins[0].portRegPtr = &((PORTD));
+    keypad.KP_I_Pins[0].dirRegPtr = &((TRISD));
+    keypad.KP_I_Pins[0].pin = ((3));
+    GPIO_Init_Pin(keypad.KP_I_Pins[0].dirRegPtr,keypad.KP_I_Pins[0].pin,(1));
+
+    keypad.KP_I_Pins[1].portRegPtr = &((PORTD));
+    keypad.KP_I_Pins[1].dirRegPtr = &((TRISD));
+    keypad.KP_I_Pins[1].pin = ((2));
+    GPIO_Init_Pin(keypad.KP_I_Pins[1].dirRegPtr,keypad.KP_I_Pins[1].pin,(1));
+
+    keypad.KP_I_Pins[2].portRegPtr = &((PORTD));
+    keypad.KP_I_Pins[2].dirRegPtr = &((TRISD));
+    keypad.KP_I_Pins[2].pin = ((1));
+    GPIO_Init_Pin(keypad.KP_I_Pins[2].dirRegPtr,keypad.KP_I_Pins[2].pin,(1));
+
+    keypad.KP_I_Pins[3].portRegPtr = &((PORTD));
+    keypad.KP_I_Pins[3].dirRegPtr = &((TRISD));
+    keypad.KP_I_Pins[3].pin = ((0));
+    GPIO_Init_Pin(keypad.KP_I_Pins[3].dirRegPtr,keypad.KP_I_Pins[3].pin,(1));
+
+
+    keypad.KP_O_Pins[0].portRegPtr = &((PORTB));
+    keypad.KP_O_Pins[0].dirRegPtr = &((TRISB));
+    keypad.KP_O_Pins[0].pin = ((0));
+    GPIO_Init_Pin(keypad.KP_O_Pins[0].dirRegPtr,keypad.KP_O_Pins[0].pin,(0));
+
+    keypad.KP_O_Pins[1].portRegPtr = &((PORTB));
+    keypad.KP_O_Pins[1].dirRegPtr = &((TRISB));
+    keypad.KP_O_Pins[1].pin = ((1));
+    GPIO_Init_Pin(keypad.KP_O_Pins[1].dirRegPtr,keypad.KP_O_Pins[1].pin,(0));
+
+    keypad.KP_O_Pins[2].portRegPtr = &((PORTB));
+    keypad.KP_O_Pins[2].dirRegPtr = &((TRISB));
+    keypad.KP_O_Pins[2].pin = ((2));
+    GPIO_Init_Pin(keypad.KP_O_Pins[2].dirRegPtr,keypad.KP_O_Pins[2].pin,(0));
+
+
+    ((*keypad.KP_O_Pins[0].portRegPtr)=(*keypad.KP_O_Pins[0].portRegPtr & ~(1<<keypad.KP_O_Pins[0].pin))|((1)<<keypad.KP_O_Pins[0].pin));
+    ((*keypad.KP_O_Pins[1].portRegPtr)=(*keypad.KP_O_Pins[1].portRegPtr & ~(1<<keypad.KP_O_Pins[1].pin))|((1)<<keypad.KP_O_Pins[1].pin));
+    ((*keypad.KP_O_Pins[2].portRegPtr)=(*keypad.KP_O_Pins[2].portRegPtr & ~(1<<keypad.KP_O_Pins[2].pin))|((1)<<keypad.KP_O_Pins[2].pin));
+
+
+    ((*keypad.KP_O_Pins[current_column].portRegPtr)=(*keypad.KP_O_Pins[current_column].portRegPtr & ~(1<<keypad.KP_O_Pins[current_column].pin))|((0)<<keypad.KP_O_Pins[current_column].pin));
+
+}
+uint8 keypad_getState(KP_t item)
+{
+    return KP_Btn_Data[item].state;
+}
+void keypad_Update(void)
+{
+    int i;
+    tick_counter += (5);
+    if(tick_counter != (10)){
+
+        ((*keypad.KP_O_Pins[current_column].portRegPtr)=(*keypad.KP_O_Pins[current_column].portRegPtr & ~(1<<keypad.KP_O_Pins[current_column].pin))|((0)<<keypad.KP_O_Pins[current_column].pin));
+        return;
+    }
+    tick_counter = 0;
+
+
+
+
+    for(i =0; i<(4);i++)
+    {
+
+
+        KP_Btn_Data[current_column + 3*i].samples[0] = KP_Btn_Data[current_column+ 3*i].samples[1];
+
+        KP_Btn_Data[current_column+ 3*i].samples[1] = ((*keypad.KP_I_Pins[i].portRegPtr >> keypad.KP_I_Pins[i].pin)& 1);
+    }
+
+
+
+
+    for(i =0; i<(4);i++)
+    {
+        switch(KP_Btn_Data[current_column + 3*i].state)
+        {
+
+            case SW_PRE_RELEASED:
+                if(KP_Btn_Data[current_column + 3*i].samples[0] == (1) && KP_Btn_Data[current_column + 3*i].samples[1] == (1))
+                    KP_Btn_Data[current_column + 3*i].state = SW_RELEASED;
+                break;
+            case SW_RELEASED:
+                if(KP_Btn_Data[current_column + 3*i].samples[0] == (0) && KP_Btn_Data[current_column + 3*i].samples[1] == (0))
+                    KP_Btn_Data[current_column + 3*i].state = SW_PRE_PRESSED;
+                break;
+            case SW_PRE_PRESSED:
+                if(KP_Btn_Data[current_column + 3*i].samples[0] == (0) && KP_Btn_Data[current_column + 3*i].samples[1] == (0))
+                    KP_Btn_Data[current_column + 3*i].state = SW_PRESSED;
+                break;
+            case SW_PRESSED:
+                if(KP_Btn_Data[current_column + 3*i].samples[0] == (1) && KP_Btn_Data[current_column + 3*i].samples[1] == (1))
+                    KP_Btn_Data[current_column + 3*i].state = SW_PRE_RELEASED;
+                break;
+            default:
+                break;
+        }
+        if(KP_Btn_Data[current_column + 3*i].state == SW_PRE_PRESSED)LCD_SetSymbol('0'+current_column + 3*i+1 , 0 , current_column + 3*i);
+    }
+
+
+
+    ((*keypad.KP_O_Pins[current_column].portRegPtr)=(*keypad.KP_O_Pins[current_column].portRegPtr & ~(1<<keypad.KP_O_Pins[current_column].pin))|((1)<<keypad.KP_O_Pins[current_column].pin));
+
+
+    current_column++;
+    if(current_column == (3))current_column = 0;
+
+
+
+}

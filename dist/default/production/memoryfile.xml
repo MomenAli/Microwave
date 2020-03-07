@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\MicroWave.production.hex">
+  <executable name="dist/default/production\Microwave.production.hex">
     <memory name="program">
       <units>bytes</units>
       <length>32768</length>
-      <used>4248</used>
-      <free>28520</free>
+      <used>5764</used>
+      <free>27004</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>2048</length>
-      <used>240</used>
-      <free>1808</free>
+      <used>326</used>
+      <free>1722</free>
     </memory>
   </executable>
 </project>

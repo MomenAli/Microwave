@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=elf
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=GPIO.c SW.c DO.c KPad.c LCD.c Disp.c Time.c MV.c OSTimer.c Microwave.c
+SOURCEFILES_QUOTED_IF_SPACED=GPIO.c SW.c DO.c LCD.c Disp.c Time.c MV.c OSTimer.c Microwave.c Keypad.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/GPIO.p1 ${OBJECTDIR}/SW.p1 ${OBJECTDIR}/DO.p1 ${OBJECTDIR}/KPad.p1 ${OBJECTDIR}/LCD.p1 ${OBJECTDIR}/Disp.p1 ${OBJECTDIR}/Time.p1 ${OBJECTDIR}/MV.p1 ${OBJECTDIR}/OSTimer.p1 ${OBJECTDIR}/Microwave.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/GPIO.p1.d ${OBJECTDIR}/SW.p1.d ${OBJECTDIR}/DO.p1.d ${OBJECTDIR}/KPad.p1.d ${OBJECTDIR}/LCD.p1.d ${OBJECTDIR}/Disp.p1.d ${OBJECTDIR}/Time.p1.d ${OBJECTDIR}/MV.p1.d ${OBJECTDIR}/OSTimer.p1.d ${OBJECTDIR}/Microwave.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/GPIO.p1 ${OBJECTDIR}/SW.p1 ${OBJECTDIR}/DO.p1 ${OBJECTDIR}/LCD.p1 ${OBJECTDIR}/Disp.p1 ${OBJECTDIR}/Time.p1 ${OBJECTDIR}/MV.p1 ${OBJECTDIR}/OSTimer.p1 ${OBJECTDIR}/Microwave.p1 ${OBJECTDIR}/Keypad.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/GPIO.p1.d ${OBJECTDIR}/SW.p1.d ${OBJECTDIR}/DO.p1.d ${OBJECTDIR}/LCD.p1.d ${OBJECTDIR}/Disp.p1.d ${OBJECTDIR}/Time.p1.d ${OBJECTDIR}/MV.p1.d ${OBJECTDIR}/OSTimer.p1.d ${OBJECTDIR}/Microwave.p1.d ${OBJECTDIR}/Keypad.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/GPIO.p1 ${OBJECTDIR}/SW.p1 ${OBJECTDIR}/DO.p1 ${OBJECTDIR}/KPad.p1 ${OBJECTDIR}/LCD.p1 ${OBJECTDIR}/Disp.p1 ${OBJECTDIR}/Time.p1 ${OBJECTDIR}/MV.p1 ${OBJECTDIR}/OSTimer.p1 ${OBJECTDIR}/Microwave.p1
+OBJECTFILES=${OBJECTDIR}/GPIO.p1 ${OBJECTDIR}/SW.p1 ${OBJECTDIR}/DO.p1 ${OBJECTDIR}/LCD.p1 ${OBJECTDIR}/Disp.p1 ${OBJECTDIR}/Time.p1 ${OBJECTDIR}/MV.p1 ${OBJECTDIR}/OSTimer.p1 ${OBJECTDIR}/Microwave.p1 ${OBJECTDIR}/Keypad.p1
 
 # Source Files
-SOURCEFILES=GPIO.c SW.c DO.c KPad.c LCD.c Disp.c Time.c MV.c OSTimer.c Microwave.c
+SOURCEFILES=GPIO.c SW.c DO.c LCD.c Disp.c Time.c MV.c OSTimer.c Microwave.c Keypad.c
 
 
 
@@ -88,7 +88,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=18F4550
 # ------------------------------------------------------------------------------------
@@ -117,14 +117,6 @@ ${OBJECTDIR}/DO.p1: DO.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/DO.p1 DO.c 
 	@-${MV} ${OBJECTDIR}/DO.d ${OBJECTDIR}/DO.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/DO.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/KPad.p1: KPad.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/KPad.p1.d 
-	@${RM} ${OBJECTDIR}/KPad.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/KPad.p1 KPad.c 
-	@-${MV} ${OBJECTDIR}/KPad.d ${OBJECTDIR}/KPad.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/KPad.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 ${OBJECTDIR}/LCD.p1: LCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -174,6 +166,14 @@ ${OBJECTDIR}/Microwave.p1: Microwave.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/Microwave.d ${OBJECTDIR}/Microwave.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Microwave.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/Keypad.p1: Keypad.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Keypad.p1.d 
+	@${RM} ${OBJECTDIR}/Keypad.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/Keypad.p1 Keypad.c 
+	@-${MV} ${OBJECTDIR}/Keypad.d ${OBJECTDIR}/Keypad.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/Keypad.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/GPIO.p1: GPIO.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -198,14 +198,6 @@ ${OBJECTDIR}/DO.p1: DO.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/DO.p1 DO.c 
 	@-${MV} ${OBJECTDIR}/DO.d ${OBJECTDIR}/DO.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/DO.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/KPad.p1: KPad.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/KPad.p1.d 
-	@${RM} ${OBJECTDIR}/KPad.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/KPad.p1 KPad.c 
-	@-${MV} ${OBJECTDIR}/KPad.d ${OBJECTDIR}/KPad.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/KPad.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 ${OBJECTDIR}/LCD.p1: LCD.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -255,6 +247,14 @@ ${OBJECTDIR}/Microwave.p1: Microwave.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/Microwave.d ${OBJECTDIR}/Microwave.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/Microwave.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/Keypad.p1: Keypad.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Keypad.p1.d 
+	@${RM} ${OBJECTDIR}/Keypad.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/Keypad.p1 Keypad.c 
+	@-${MV} ${OBJECTDIR}/Keypad.d ${OBJECTDIR}/Keypad.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/Keypad.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 endif
 
 # ------------------------------------------------------------------------------------
@@ -272,15 +272,15 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -Wl,-Map=dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.map  -D__DEBUG=1  -DXPRJ_default=$(CND_CONF)  -Wl,--defsym=__MPLAB_BUILD=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -mrom=default,-7dc0-7fff -mram=default,-3f4-3ff,-f9c-f9c,-fd4-fd4,-fdb-fdf,-fe3-fe7,-feb-fef,-ffd-fff  $(COMPARISON_BUILD) -Wl,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -o dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.hex 
+	${MP_CC} $(MP_EXTRA_LD_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -Wl,-Map=dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.map  -D__DEBUG=1  -DXPRJ_default=$(CND_CONF)  -Wl,--defsym=__MPLAB_BUILD=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -mrom=default,-7dc0-7fff -mram=default,-3f4-3ff,-f9c-f9c,-fd4-fd4,-fdb-fdf,-fe3-fe7,-feb-fef,-ffd-fff  $(COMPARISON_BUILD) -Wl,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -o dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.hex 
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -Wl,-Map=dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.map  -DXPRJ_default=$(CND_CONF)  -Wl,--defsym=__MPLAB_BUILD=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     $(COMPARISON_BUILD) -Wl,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -o dist/${CND_CONF}/${IMAGE_TYPE}/MicroWave.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_CC} $(MP_EXTRA_LD_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -Wl,-Map=dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.map  -DXPRJ_default=$(CND_CONF)  -Wl,--defsym=__MPLAB_BUILD=1    -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     $(COMPARISON_BUILD) -Wl,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -o dist/${CND_CONF}/${IMAGE_TYPE}/Microwave.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 	
 endif
 

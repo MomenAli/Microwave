@@ -5694,13 +5694,7 @@ void LCD_Update(void);
 # 12 "OSTimer.c" 2
 
 # 1 "./DO.h" 1
-# 21 "./DO.h"
-typedef struct {
-    volatile uint8 * portRegPtr;
-    volatile uint8 * dirRegPtr;
-    uint8 pin;
-}DOStruct_t;
-
+# 16 "./DO.h"
 typedef enum{
 
     DO_OFF = 0,
@@ -5719,6 +5713,43 @@ uint8 DO_GetState(DO_t DO);
 void DO_SetState(DO_t DO,LEDState_t state);
 void DO_update(void);
 # 13 "OSTimer.c" 2
+
+# 1 "./Keypad.h" 1
+# 58 "./Keypad.h"
+typedef enum
+{
+    KP_ONE,
+    KP_TWO,
+    KP_THREE,
+    KP_FOUR,
+    KP_FIVE,
+    KP_SIX,
+    KP_SEVEN,
+    KP_EIGHT,
+    KP_NINE,
+    KP_HASH,
+    KP_ZERO,
+    KP_STAR
+}KP_t;
+
+
+
+
+
+typedef enum
+{
+    SW_RELEASED,
+    SW_PRE_PRESSED,
+    SW_PRESSED,
+    SW_PRE_RELEASED
+}SW_State_t;
+
+
+
+void keypad_Init(void);
+uint8 keypad_getState(KP_t item);
+void keypad_Update(void);
+# 14 "OSTimer.c" 2
 
 
 
@@ -5753,22 +5784,20 @@ void __attribute__((picinterrupt(("")))) TMR0_ISR(void)
 
     tempCounter+=(5);
 
+    keypad_Update();
+    LCD_Update();
 
 
-
-    if(tempCounter >= 1000){
+    if(tempCounter >= 4000){
         tempCounter = 0;
 
-        LCD_SetSymbol(LCD_DOOR,index,counter);
+        LCD_SetSymbol(LCD_DOOR,1,counter);
         counter++;
         if(counter == 16)
-        {counter=-1;index = 1; }
-
+        {counter=-1;}
     }
 
 
-
-    LCD_Update();
 
     ((TMR0IF) = 0);
 

@@ -5697,17 +5697,6 @@ typedef unsigned int uint16;
 
 
 
-
-
-
-
-
-typedef struct {
-    volatile uint8 * portRegPtr;
-    volatile uint8 * dirRegPtr;
-    uint8 pin;
-}DOStruct_t;
-
 typedef enum{
 
     DO_OFF = 0,
@@ -5779,6 +5768,43 @@ uint8 TMR_CheckOverflow(void);
 void TMR0_ISR(void);
 # 81 "Microwave.c" 2
 
+# 1 "./Keypad.h" 1
+# 58 "./Keypad.h"
+typedef enum
+{
+    KP_ONE,
+    KP_TWO,
+    KP_THREE,
+    KP_FOUR,
+    KP_FIVE,
+    KP_SIX,
+    KP_SEVEN,
+    KP_EIGHT,
+    KP_NINE,
+    KP_HASH,
+    KP_ZERO,
+    KP_STAR
+}KP_t;
+
+
+
+
+
+typedef enum
+{
+    SW_RELEASED,
+    SW_PRE_PRESSED,
+    SW_PRESSED,
+    SW_PRE_RELEASED
+}SW_State_t;
+
+
+
+void keypad_Init(void);
+uint8 keypad_getState(KP_t item);
+void keypad_Update(void);
+# 82 "Microwave.c" 2
+
 
 
 void init(void);
@@ -5788,15 +5814,9 @@ void main(void) {
 
     LCD_Init();
     init();
-    DO_SetState(DO_MOTOR,DO_ON);
     TMR_Init();
     TMR_Start();
-
-    LCD_SetSymbol('b',0,0);
-    LCD_SetSymbol('b',1,0);
-    LCD_SetSymbol('b',1,5);
-    LCD_Update();
-    LCD_Update();
+    keypad_Init();
     while(1)
     {
 

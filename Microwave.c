@@ -79,6 +79,7 @@
 #include "Port.h"
 #include "LCD.h"
 #include "OSTimer.h"
+#include "Keypad.h"
 
 
 void init(void);
@@ -88,15 +89,9 @@ void main(void) {
     /* test LCD module */
     LCD_Init();
     init();
-    DO_SetState(DO_MOTOR,DO_ON);
     TMR_Init();
     TMR_Start();
-    
-    LCD_SetSymbol('b',0,0);
-    LCD_SetSymbol('b',1,0);
-    LCD_SetSymbol('b',1,5);
-    LCD_Update();
-    LCD_Update();
+    keypad_Init();
     while(1)
     {
         

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=MicroWave
+PROJECTNAME=Microwave
 
 # Active Configuration
 DEFAULTCONF=default

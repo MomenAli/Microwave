@@ -10,6 +10,7 @@
 #include "DO.h"
 #include "Port.h"
 #include "GPIO.h"
+#include "IOPinInterface.h"
 
 #define DO_NUM (3)
 /*
@@ -18,7 +19,7 @@
  * and add the name of it in DO_t in the same index
  */
 
-static DOStruct_t  DOArray[DO_NUM];
+static IOPinStruct_t DOArray[DO_NUM];
 
 
 uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)

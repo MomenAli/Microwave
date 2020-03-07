@@ -13,17 +13,6 @@
 #include "Main.h"
 
 
-/* this is the structure of every DO will this driver will control
- * port for data register
- * dir for direction register
- * pin for the pin number of the output
- */
-typedef struct {
-    volatile uint8 * portRegPtr;
-    volatile uint8 * dirRegPtr; 
-    uint8 pin;
-}DOStruct_t;
-
 typedef enum{
     /*modify this enum depend on your connection (cathode or anode)*/
     DO_OFF = 0,

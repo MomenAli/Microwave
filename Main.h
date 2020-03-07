@@ -154,6 +154,9 @@ typedef unsigned int  uint16;
 
 
 
+// keypad pull up resistor enable
+
+#define KEYPAD_PULLUP_RESISOR_ENABLE (RDPU = 0)
 
 
 #endif	/* MAIN_H */

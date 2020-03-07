@@ -5638,17 +5638,6 @@ typedef unsigned int uint16;
 
 
 
-
-
-
-
-
-typedef struct {
-    volatile uint8 * portRegPtr;
-    volatile uint8 * dirRegPtr;
-    uint8 pin;
-}DOStruct_t;
-
 typedef enum{
 
     DO_OFF = 0,
@@ -5677,8 +5666,17 @@ uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
 uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
 uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
 # 12 "DO.c" 2
-# 21 "DO.c"
-static DOStruct_t DOArray[(3)];
+
+# 1 "./IOPinInterface.h" 1
+# 23 "./IOPinInterface.h"
+typedef struct {
+    volatile uint8 * portRegPtr;
+    volatile uint8 * dirRegPtr;
+    uint8 pin;
+}IOPinStruct_t;
+# 13 "DO.c" 2
+# 22 "DO.c"
+static IOPinStruct_t DOArray[(3)];
 
 
 uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)

@@ -22,16 +22,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _TMR0ON `Vb ~T0 @X0 0 e@32431 ]
 [t ~ __interrupt . k ]
 [t T36 __interrupt ]
-"64 ./LCD.h
-[; ;./LCD.h: 64: void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
-[v _LCD_SetSymbol `(v ~T0 @X0 0 ef3`uc`uc`uc ]
-"53 OSTimer.c
-[; ;OSTimer.c: 53:         LCD_SetSymbol(LCD_DOOR,index,counter);
-[c E3167 0 1 2 3 4 5 6 .. ]
-[n E3167 . LCD_MOTOR1 LCD_MOTOR2 LCD_MOTOR3 LCD_MOTOR4 LCD_LAMP LCD_HEATER LCD_DOOR  ]
+"90 ./Keypad.h
+[; ;./Keypad.h: 90: void keypad_Update(void);
+[v _keypad_Update `(v ~T0 @X0 0 ef ]
 "66 ./LCD.h
 [; ;./LCD.h: 66: void LCD_Update(void);
 [v _LCD_Update `(v ~T0 @X0 0 ef ]
+"64
+[; ;./LCD.h: 64: void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+[v _LCD_SetSymbol `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"55 OSTimer.c
+[; ;OSTimer.c: 55:         LCD_SetSymbol(LCD_DOOR,1,counter);
+[c E3167 0 1 2 3 4 5 6 .. ]
+[n E3167 . LCD_MOTOR1 LCD_MOTOR2 LCD_MOTOR3 LCD_MOTOR4 LCD_LAMP LCD_HEATER LCD_DOOR  ]
 "10815 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 10815: extern volatile __bit TMR0IF __attribute__((address(0x7F92)));
 [v _TMR0IF `Vb ~T0 @X0 0 e@32658 ]
@@ -554,160 +557,162 @@ Version 4.0 HI-TECH Software Intermediate Code
 "8893
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 8893: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
-"17 OSTimer.c
-[; ;OSTimer.c: 17: static uint16 tempCounter = 0;
+"18 OSTimer.c
+[; ;OSTimer.c: 18: static uint16 tempCounter = 0;
 [v _tempCounter `ui ~T0 @X0 1 s ]
 [i _tempCounter
 -> -> 0 `i `ui
 ]
-"21
-[; ;OSTimer.c: 21: void TMR_Init(void)
-[v _TMR_Init `(v ~T0 @X0 1 ef ]
 "22
-[; ;OSTimer.c: 22: {
+[; ;OSTimer.c: 22: void TMR_Init(void)
+[v _TMR_Init `(v ~T0 @X0 1 ef ]
+"23
+[; ;OSTimer.c: 23: {
 {
 [e :U _TMR_Init ]
 [f ]
-"25
-[; ;OSTimer.c: 25:     (PSA = 0);
-[e = _PSA -> -> 0 `i `b ]
 "26
-[; ;OSTimer.c: 26:     T0PS2 = 0; T0PS1 = 0; T0PS0 = 0;
+[; ;OSTimer.c: 26:     (PSA = 0);
+[e = _PSA -> -> 0 `i `b ]
+"27
+[; ;OSTimer.c: 27:     T0PS2 = 0; T0PS1 = 0; T0PS0 = 0;
 [e = _T0PS2 -> -> 0 `i `b ]
 [e = _T0PS1 -> -> 0 `i `b ]
 [e = _T0PS0 -> -> 0 `i `b ]
-"28
-[; ;OSTimer.c: 28:     (T0CS = 0);
+"29
+[; ;OSTimer.c: 29:     (T0CS = 0);
 [e = _T0CS -> -> 0 `i `b ]
-"30
-[; ;OSTimer.c: 30:     (T08BIT = 1);
+"31
+[; ;OSTimer.c: 31:     (T08BIT = 1);
 [e = _T08BIT -> -> 1 `i `b ]
-"32
-[; ;OSTimer.c: 32:     (TMR0ON = 0);
+"33
+[; ;OSTimer.c: 33:     (TMR0ON = 0);
 [e = _TMR0ON -> -> 0 `i `b ]
-"34
-[; ;OSTimer.c: 34: }
-[e :UE 368 ]
+"35
+[; ;OSTimer.c: 35: }
+[e :UE 367 ]
 }
 [v $root$_TMR0_ISR `(v ~T0 @X0 0 e ]
-"38
-[; ;OSTimer.c: 38: void __attribute__((picinterrupt(("")))) TMR0_ISR(void)
-[v _TMR0_ISR `(v ~T36 @X0 1 ef ]
 "39
-[; ;OSTimer.c: 39: {
+[; ;OSTimer.c: 39: void __attribute__((picinterrupt(("")))) TMR0_ISR(void)
+[v _TMR0_ISR `(v ~T36 @X0 1 ef ]
+"40
+[; ;OSTimer.c: 40: {
 {
 [e :U _TMR0_ISR ]
 [f ]
-"40
-[; ;OSTimer.c: 40:     static uint8 index = 0;
-[v F3226 `uc ~T0 @X0 1 s index ]
-[i F3226
+"41
+[; ;OSTimer.c: 41:     static uint8 index = 0;
+[v F3245 `uc ~T0 @X0 1 s index ]
+[i F3245
 -> -> 0 `i `uc
 ]
-"42
-[; ;OSTimer.c: 42:     static uint16 counter = 0;
-[v F3227 `ui ~T0 @X0 1 s counter ]
-[i F3227
+"43
+[; ;OSTimer.c: 43:     static uint16 counter = 0;
+[v F3246 `ui ~T0 @X0 1 s counter ]
+[i F3246
 -> -> 0 `i `ui
 ]
-"45
-[; ;OSTimer.c: 45:     tempCounter+=(5);
+"46
+[; ;OSTimer.c: 46:     tempCounter+=(5);
 [e =+ _tempCounter -> -> 5 `i `ui ]
-"50
-[; ;OSTimer.c: 50:     if(tempCounter >= 1000){
-[e $ ! >= _tempCounter -> -> 1000 `i `ui 370  ]
+"48
+[; ;OSTimer.c: 48:     keypad_Update();
+[e ( _keypad_Update ..  ]
+"49
+[; ;OSTimer.c: 49:     LCD_Update();
+[e ( _LCD_Update ..  ]
+"52
+[; ;OSTimer.c: 52:     if(tempCounter >= 4000){
+[e $ ! >= _tempCounter -> -> 4000 `i `ui 369  ]
 {
-"51
-[; ;OSTimer.c: 51:         tempCounter = 0;
-[e = _tempCounter -> -> 0 `i `ui ]
 "53
-[; ;OSTimer.c: 53:         LCD_SetSymbol(LCD_DOOR,index,counter);
-[e ( _LCD_SetSymbol (3 , , -> . `E3167 6 `uc F3226 -> F3227 `uc ]
-"54
-[; ;OSTimer.c: 54:         counter++;
-[e ++ F3227 -> -> 1 `i `ui ]
+[; ;OSTimer.c: 53:         tempCounter = 0;
+[e = _tempCounter -> -> 0 `i `ui ]
 "55
-[; ;OSTimer.c: 55:         if(counter == 16)
-[e $ ! == F3227 -> -> 16 `i `ui 371  ]
+[; ;OSTimer.c: 55:         LCD_SetSymbol(LCD_DOOR,1,counter);
+[e ( _LCD_SetSymbol (3 , , -> . `E3167 6 `uc -> -> 1 `i `uc -> F3246 `uc ]
 "56
-[; ;OSTimer.c: 56:         {counter=-1;index = 1; }
-{
-[e = F3227 -> -U -> 1 `i `ui ]
-[e = F3226 -> -> 1 `i `uc ]
-}
-[e :U 371 ]
+[; ;OSTimer.c: 56:         counter++;
+[e ++ F3246 -> -> 1 `i `ui ]
+"57
+[; ;OSTimer.c: 57:         if(counter == 16)
+[e $ ! == F3246 -> -> 16 `i `ui 370  ]
 "58
-[; ;OSTimer.c: 58:     }
+[; ;OSTimer.c: 58:         {counter=-1;}
+{
+[e = F3246 -> -U -> 1 `i `ui ]
 }
 [e :U 370 ]
-"62
-[; ;OSTimer.c: 62:     LCD_Update();
-[e ( _LCD_Update ..  ]
-"64
-[; ;OSTimer.c: 64:     ((TMR0IF) = 0);
-[e = _TMR0IF -> -> 0 `i `b ]
-"66
-[; ;OSTimer.c: 66:     ((TMR0) = 65,536 - ((5000)));
-[e ; = _TMR0 -> -> 65 `i `us - -> 536 `i -> 5000 `i ]
-"68
-[; ;OSTimer.c: 68: }
-[e :UE 369 ]
+"59
+[; ;OSTimer.c: 59:     }
 }
-"69
-[; ;OSTimer.c: 69: void TMR_Start(void)
+[e :U 369 ]
+"63
+[; ;OSTimer.c: 63:     ((TMR0IF) = 0);
+[e = _TMR0IF -> -> 0 `i `b ]
+"65
+[; ;OSTimer.c: 65:     ((TMR0) = 65,536 - ((5000)));
+[e ; = _TMR0 -> -> 65 `i `us - -> 536 `i -> 5000 `i ]
+"67
+[; ;OSTimer.c: 67: }
+[e :UE 368 ]
+}
+"68
+[; ;OSTimer.c: 68: void TMR_Start(void)
 [v _TMR_Start `(v ~T0 @X0 1 ef ]
-"70
-[; ;OSTimer.c: 70: {
+"69
+[; ;OSTimer.c: 69: {
 {
 [e :U _TMR_Start ]
 [f ]
-"72
-[; ;OSTimer.c: 72:     ((TMR0IF) = 0);
+"71
+[; ;OSTimer.c: 71:     ((TMR0IF) = 0);
 [e = _TMR0IF -> -> 0 `i `b ]
-"74
-[; ;OSTimer.c: 74:     ((TMR0) = 65,536 - ((5000)));
+"73
+[; ;OSTimer.c: 73:     ((TMR0) = 65,536 - ((5000)));
 [e ; = _TMR0 -> -> 65 `i `us - -> 536 `i -> 5000 `i ]
-"76
-[; ;OSTimer.c: 76:     (TMR0IE = 1);
+"75
+[; ;OSTimer.c: 75:     (TMR0IE = 1);
 [e = _TMR0IE -> -> 1 `i `b ]
-"77
-[; ;OSTimer.c: 77:     (GIE = 1);
+"76
+[; ;OSTimer.c: 76:     (GIE = 1);
 [e = _GIE -> -> 1 `i `b ]
-"79
-[; ;OSTimer.c: 79:     (TMR0ON = 1);
+"78
+[; ;OSTimer.c: 78:     (TMR0ON = 1);
 [e = _TMR0ON -> -> 1 `i `b ]
-"81
-[; ;OSTimer.c: 81: }
-[e :UE 372 ]
+"80
+[; ;OSTimer.c: 80: }
+[e :UE 371 ]
 }
-"82
-[; ;OSTimer.c: 82: void TMR_Stop(void)
+"81
+[; ;OSTimer.c: 81: void TMR_Stop(void)
 [v _TMR_Stop `(v ~T0 @X0 1 ef ]
-"83
-[; ;OSTimer.c: 83: {
+"82
+[; ;OSTimer.c: 82: {
 {
 [e :U _TMR_Stop ]
 [f ]
-"85
-[; ;OSTimer.c: 85:     (TMR0ON = 0);
+"84
+[; ;OSTimer.c: 84:     (TMR0ON = 0);
 [e = _TMR0ON -> -> 0 `i `b ]
-"86
-[; ;OSTimer.c: 86: }
-[e :UE 373 ]
+"85
+[; ;OSTimer.c: 85: }
+[e :UE 372 ]
 }
-"87
-[; ;OSTimer.c: 87: uint8 TMR_CheckOverflow(void)
+"86
+[; ;OSTimer.c: 86: uint8 TMR_CheckOverflow(void)
 [v _TMR_CheckOverflow `(uc ~T0 @X0 1 ef ]
-"88
-[; ;OSTimer.c: 88: {
+"87
+[; ;OSTimer.c: 87: {
 {
 [e :U _TMR_CheckOverflow ]
 [f ]
-"90
-[; ;OSTimer.c: 90:     return ((TMR0IF));
+"89
+[; ;OSTimer.c: 89:     return ((TMR0IF));
 [e ) -> _TMR0IF `uc ]
-[e $UE 374  ]
-"91
-[; ;OSTimer.c: 91: }
-[e :UE 374 ]
+[e $UE 373  ]
+"90
+[; ;OSTimer.c: 90: }
+[e :UE 373 ]
 }

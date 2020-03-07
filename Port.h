@@ -49,9 +49,48 @@
 #define LCD_DATA_PORT GPIO_PORTD_DATA
 #define LCD_DATA_DIR  GPIO_PORTD_DIR
 #ifdef LCD_MODE_4_BIT
+/* 
+ * (0)   pins from 0 to 3
+ * (1)   pins from 4 to 7
+ * etc..
+ */
 #define LCD_NIBBLE_NUM    (1)
 #endif
 
+
+// keypad 
+
+// define the Input pins
+// row 1
+#define KEYPAD_ROW1_PORT (GPIO_PORTD_DATA) 
+#define KEYPAD_ROW1_DIR  (GPIO_PORTD_DIR) 
+#define KEYPAD_ROW1_PIN  (PIN_3) 
+// row 2
+#define KEYPAD_ROW2_PORT (GPIO_PORTD_DATA) 
+#define KEYPAD_ROW2_DIR  (GPIO_PORTD_DIR) 
+#define KEYPAD_ROW2_PIN  (PIN_2) 
+// row 3
+#define KEYPAD_ROW3_PORT (GPIO_PORTD_DATA) 
+#define KEYPAD_ROW3_DIR  (GPIO_PORTD_DIR) 
+#define KEYPAD_ROW3_PIN  (PIN_1) 
+
+// row 4
+#define KEYPAD_ROW4_PORT (GPIO_PORTD_DATA) 
+#define KEYPAD_ROW4_DIR  (GPIO_PORTD_DIR) 
+#define KEYPAD_ROW4_PIN  (PIN_0) 
+// define the Output pins
+// column 1
+#define KEYPAD_COLUMN1_PORT (GPIO_PORTB_DATA) 
+#define KEYPAD_COLUMN1_DIR  (GPIO_PORTB_DIR) 
+#define KEYPAD_COLUMN1_PIN  (PIN_0) 
+// column 2
+#define KEYPAD_COLUMN2_PORT (GPIO_PORTB_DATA) 
+#define KEYPAD_COLUMN2_DIR  (GPIO_PORTB_DIR) 
+#define KEYPAD_COLUMN2_PIN  (PIN_1) 
+// column 3
+#define KEYPAD_COLUMN3_PORT (GPIO_PORTB_DATA) 
+#define KEYPAD_COLUMN3_DIR  (GPIO_PORTB_DIR) 
+#define KEYPAD_COLUMN3_PIN  (PIN_2) 
 
 
 #endif	/* PORT_H */

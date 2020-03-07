@@ -1,14 +1,14 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"21 ./DO.h
-[; ;./DO.h: 21: typedef struct {
+"23 ./IOPinInterface.h
+[; ;./IOPinInterface.h: 23: typedef struct {
 [s S367 `*Vuc 1 `*Vuc 1 `uc 1 ]
 [n S367 . portRegPtr dirRegPtr pin ]
-"24 DO.c
-[; ;DO.c: 24: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)
-[c E3171 0 1 2 .. ]
-[n E3171 . DO_LAMP DO_HEATER DO_MOTOR  ]
-[c E3167 0 1 .. ]
-[n E3167 . DO_OFF DO_ON  ]
+"25 DO.c
+[; ;DO.c: 25: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)
+[c E3166 0 1 2 .. ]
+[n E3166 . DO_LAMP DO_HEATER DO_MOTOR  ]
+[c E3162 0 1 .. ]
+[n E3162 . DO_OFF DO_ON  ]
 "39 ./GPIO.h
 [; ;./GPIO.h: 39: uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
 [v _GPIO_Init_Pin `(uc ~T0 @X0 0 ef3`*Vuc`uc`uc ]
@@ -522,96 +522,96 @@ Version 4.0 HI-TECH Software Intermediate Code
 "8893
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 8893: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
-"21 DO.c
-[; ;DO.c: 21: static DOStruct_t DOArray[(3)];
+"22 DO.c
+[; ;DO.c: 22: static IOPinStruct_t DOArray[(3)];
 [v _DOArray `S367 ~T0 @X0 -> 3 `i s ]
-"24
-[; ;DO.c: 24: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)
-[v _DO_Init `(uc ~T0 @X0 1 ef5`E3171`*Vuc`*Vuc`uc`E3167 ]
 "25
-[; ;DO.c: 25: {
+[; ;DO.c: 25: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)
+[v _DO_Init `(uc ~T0 @X0 1 ef5`E3166`*Vuc`*Vuc`uc`E3162 ]
+"26
+[; ;DO.c: 26: {
 {
 [e :U _DO_Init ]
-"24
-[; ;DO.c: 24: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)
-[v _DO `E3171 ~T0 @X0 1 r1 ]
+"25
+[; ;DO.c: 25: uint8 DO_Init(DO_t DO ,volatile uint8* port ,volatile uint8* dir,uint8 pinN ,LEDState_t state)
+[v _DO `E3166 ~T0 @X0 1 r1 ]
 [v _port `*Vuc ~T0 @X0 1 r2 ]
 [v _dir `*Vuc ~T0 @X0 1 r3 ]
 [v _pinN `uc ~T0 @X0 1 r4 ]
-[v _state `E3167 ~T0 @X0 1 r5 ]
-"25
-[; ;DO.c: 25: {
-[f ]
+[v _state `E3162 ~T0 @X0 1 r5 ]
 "26
-[; ;DO.c: 26:     DOArray[DO].portRegPtr = port;
-[e = . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 _port ]
+[; ;DO.c: 26: {
+[f ]
 "27
-[; ;DO.c: 27:     DOArray[DO].dirRegPtr = dir;
-[e = . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 1 _dir ]
+[; ;DO.c: 27:     DOArray[DO].portRegPtr = port;
+[e = . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 _port ]
 "28
-[; ;DO.c: 28:     DOArray[DO].pin = pinN;
+[; ;DO.c: 28:     DOArray[DO].dirRegPtr = dir;
+[e = . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 1 _dir ]
+"29
+[; ;DO.c: 29:     DOArray[DO].pin = pinN;
 [e = . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 2 _pinN ]
-"30
-[; ;DO.c: 30:     GPIO_Init_Pin(dir,pinN,(0));
-[e ( _GPIO_Init_Pin (3 , , _dir _pinN -> -> 0 `i `uc ]
 "31
-[; ;DO.c: 31:     ((*port)=(*port & ~(1<<pinN))|(state<<pinN));
-[e = *U _port -> | -> & -> *U _port `i ~ << -> 1 `i -> _pinN `i `ui << -> _state `ui -> _pinN `i `uc ]
+[; ;DO.c: 31:     GPIO_Init_Pin(dir,pinN,(0));
+[e ( _GPIO_Init_Pin (3 , , _dir _pinN -> -> 0 `i `uc ]
 "32
-[; ;DO.c: 32: }
+[; ;DO.c: 32:     ((*port)=(*port & ~(1<<pinN))|(state<<pinN));
+[e = *U _port -> | -> & -> *U _port `i ~ << -> 1 `i -> _pinN `i `ui << -> _state `ui -> _pinN `i `uc ]
+"33
+[; ;DO.c: 33: }
 [e :UE 368 ]
 }
-"33
-[; ;DO.c: 33: uint8 DO_GetState(DO_t DO)
-[v _DO_GetState `(uc ~T0 @X0 1 ef1`E3171 ]
 "34
-[; ;DO.c: 34: {
+[; ;DO.c: 34: uint8 DO_GetState(DO_t DO)
+[v _DO_GetState `(uc ~T0 @X0 1 ef1`E3166 ]
+"35
+[; ;DO.c: 35: {
 {
 [e :U _DO_GetState ]
-"33
-[; ;DO.c: 33: uint8 DO_GetState(DO_t DO)
-[v _DO `E3171 ~T0 @X0 1 r1 ]
 "34
-[; ;DO.c: 34: {
-[f ]
+[; ;DO.c: 34: uint8 DO_GetState(DO_t DO)
+[v _DO `E3166 ~T0 @X0 1 r1 ]
 "35
-[; ;DO.c: 35:     return ((*(DOArray[DO].portRegPtr) >> DOArray[DO].pin)& 1);
+[; ;DO.c: 35: {
+[f ]
+"36
+[; ;DO.c: 36:     return ((*(DOArray[DO].portRegPtr) >> DOArray[DO].pin)& 1);
 [e ) -> & >> -> *U . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 `i -> . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 2 `i -> 1 `i `uc ]
 [e $UE 369  ]
-"36
-[; ;DO.c: 36: }
+"37
+[; ;DO.c: 37: }
 [e :UE 369 ]
 }
-"37
-[; ;DO.c: 37: void DO_SetState(DO_t DO,LEDState_t state)
-[v _DO_SetState `(v ~T0 @X0 1 ef2`E3171`E3167 ]
 "38
-[; ;DO.c: 38: {
+[; ;DO.c: 38: void DO_SetState(DO_t DO,LEDState_t state)
+[v _DO_SetState `(v ~T0 @X0 1 ef2`E3166`E3162 ]
+"39
+[; ;DO.c: 39: {
 {
 [e :U _DO_SetState ]
-"37
-[; ;DO.c: 37: void DO_SetState(DO_t DO,LEDState_t state)
-[v _DO `E3171 ~T0 @X0 1 r1 ]
-[v _state `E3167 ~T0 @X0 1 r2 ]
 "38
-[; ;DO.c: 38: {
-[f ]
+[; ;DO.c: 38: void DO_SetState(DO_t DO,LEDState_t state)
+[v _DO `E3166 ~T0 @X0 1 r1 ]
+[v _state `E3162 ~T0 @X0 1 r2 ]
 "39
-[; ;DO.c: 39:     ((*(DOArray[DO].portRegPtr))=(*(DOArray[DO].portRegPtr) & ~(1<<DOArray[DO].pin))|(state<<DOArray[DO].pin));
-[e = *U . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 -> | -> & -> *U . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 `i ~ << -> 1 `i -> . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 2 `i `ui << -> _state `ui -> . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 2 `i `uc ]
+[; ;DO.c: 39: {
+[f ]
 "40
-[; ;DO.c: 40: }
+[; ;DO.c: 40:     ((*(DOArray[DO].portRegPtr))=(*(DOArray[DO].portRegPtr) & ~(1<<DOArray[DO].pin))|(state<<DOArray[DO].pin));
+[e = *U . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 -> | -> & -> *U . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 0 `i ~ << -> 1 `i -> . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 2 `i `ui << -> _state `ui -> . *U + &U _DOArray * -> _DO `ux -> -> # *U &U _DOArray `ui `ux 2 `i `uc ]
+"41
+[; ;DO.c: 41: }
 [e :UE 370 ]
 }
-"41
-[; ;DO.c: 41: void DO_update(void)
-[v _DO_update `(v ~T0 @X0 1 ef ]
 "42
-[; ;DO.c: 42: {
+[; ;DO.c: 42: void DO_update(void)
+[v _DO_update `(v ~T0 @X0 1 ef ]
+"43
+[; ;DO.c: 43: {
 {
 [e :U _DO_update ]
 [f ]
-"44
-[; ;DO.c: 44: }
+"45
+[; ;DO.c: 45: }
 [e :UE 371 ]
 }
