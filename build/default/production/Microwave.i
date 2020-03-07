@@ -5790,6 +5790,8 @@ typedef enum
 
 
 
+
+
 typedef enum
 {
     SW_RELEASED,
@@ -5805,35 +5807,81 @@ uint8 keypad_getState(KP_t item);
 void keypad_Update(void);
 # 82 "Microwave.c" 2
 
+# 1 "./SW.h" 1
+# 36 "./SW.h"
+typedef enum
+{
+    SW_DOOR,
+    SW_WEIGHT_SENSOR
+}SW_t;
+# 61 "./SW.h"
+void SW_Init(SW_t ,volatile uint8 * dir,volatile uint8 * port , uint8 pin);
 
 
-void init(void);
+
+uint8 SW_GetState(SW_t sw);
+
+
+
+
+void SW_Update(void);
+# 83 "Microwave.c" 2
+
+# 1 "./GPIO.h" 1
+# 38 "./GPIO.h"
+uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
+uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
+# 84 "Microwave.c" 2
+
+
+
+void initDO(void);
+void initOSTMR(void);
+void initSW(void);
 
 void main(void) {
 
 
     LCD_Init();
-    init();
-    TMR_Init();
-    TMR_Start();
+    initDO();
+    initOSTMR();
     keypad_Init();
-    while(1)
-    {
+    initSW();
 
-    }
+
+    while(1);
     return;
 }
 
 
-void init(void)
+void initDO(void)
 {
 
 
 
-    DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
+    DO_Init(DO_LAMP,&(PORTB),&(TRISB),(6),DO_OFF);
 
-    DO_Init(DO_HEATER,&(PORTB),&(TRISB),(1),DO_OFF);
+    DO_Init(DO_HEATER,&(PORTB),&(TRISB),(7),DO_OFF);
 
     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
+
+}
+
+
+void initOSTMR(void)
+{
+    TMR_Init();
+    TMR_Start();
+}
+
+
+void initSW(void)
+{
+
+
+    SW_Init(SW_DOOR,&(TRISB),&(PORTB),(4));
+
+    SW_Init(SW_WEIGHT_SENSOR,&(TRISB),&(PORTB),(5));
 
 }

@@ -12,18 +12,26 @@
 #ifndef PORT_H
 #define	PORT_H
 
+
+
+/************************************port***********************************
+ *                               description                               *
+ * this header included all the configuration depend on your schematic     *
+ * please change the configuration if you change board 3                   *                             *
+ ***************************************************************************/
+
 #include "Main.h"
 
 //Lamp output pin 
 #define  LAMP_PORT GPIO_PORTB_DATA
 #define  LAMP_DIR  GPIO_PORTB_DIR
-#define  LAMP_PIN  PIN_0
+#define  LAMP_PIN  PIN_6
 
 
 //Heater output pin 
 #define  HEATER_PORT GPIO_PORTB_DATA
 #define  HEATER_DIR  GPIO_PORTB_DIR
-#define  HEATER_PIN  PIN_1
+#define  HEATER_PIN  PIN_7
 
 
 //Motor output pin 
@@ -91,6 +99,20 @@
 #define KEYPAD_COLUMN3_PORT (GPIO_PORTB_DATA) 
 #define KEYPAD_COLUMN3_DIR  (GPIO_PORTB_DIR) 
 #define KEYPAD_COLUMN3_PIN  (PIN_2) 
+
+
+// sw module
+
+//sw NUMBER 1 DOOR LIMIT
+#define  SW_DOOR_PORT GPIO_PORTB_DATA
+#define  SW_DOOR_DIR  GPIO_PORTB_DIR
+#define  SW_DOOR_PIN  PIN_4
+//sw NUMBER 2 WEIGHT SENSOR
+#define  SW_WEIGHT_SENSOR_PORT GPIO_PORTB_DATA
+#define  SW_WEIGHT_SENSOR_DIR  GPIO_PORTB_DIR
+#define  SW_WEIGHT_SENSOR_PIN  PIN_5
+
+
 
 
 #endif	/* PORT_H */

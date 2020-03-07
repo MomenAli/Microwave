@@ -5628,3 +5628,212 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 9 "SW.c" 2
 
+# 1 "./SW.h" 1
+# 17 "./SW.h"
+# 1 "./Main.h" 1
+# 68 "./Main.h"
+typedef unsigned char uint8;
+typedef unsigned int uint16;
+# 17 "./SW.h" 2
+# 36 "./SW.h"
+typedef enum
+{
+    SW_DOOR,
+    SW_WEIGHT_SENSOR
+}SW_t;
+
+
+
+
+
+
+
+typedef enum
+{
+    SW_RELEASED,
+    SW_PRE_PRESSED,
+    SW_PRESSED,
+    SW_PRE_RELEASED
+}SW_State_t;
+
+
+
+
+
+
+void SW_Init(SW_t ,volatile uint8 * dir,volatile uint8 * port , uint8 pin);
+
+
+
+uint8 SW_GetState(SW_t sw);
+
+
+
+
+void SW_Update(void);
+# 10 "SW.c" 2
+
+# 1 "./IOPinInterface.h" 1
+# 23 "./IOPinInterface.h"
+typedef struct {
+    volatile uint8 * portRegPtr;
+    volatile uint8 * dirRegPtr;
+    uint8 pin;
+}IOPinStruct_t;
+# 11 "SW.c" 2
+
+# 1 "./GPIO.h" 1
+# 38 "./GPIO.h"
+uint8 GPIO_Init_Port(volatile uint8 * DirRegAddress ,uint8 dir );
+uint8 GPIO_Init_Pin(volatile uint8 * DirRegAddress ,uint8 pin_number,uint8 dir );
+uint8 GPIO_Init_Nibble(volatile uint8 * DirRegAddress ,uint8 nibble_num,uint8 dir );
+# 12 "SW.c" 2
+
+# 1 "./LCD.h" 1
+# 15 "./LCD.h"
+# 1 "./Port.h" 1
+# 15 "./LCD.h" 2
+
+
+
+
+
+
+
+typedef enum
+{
+    LCD_MOTOR1,
+    LCD_MOTOR2,
+    LCD_MOTOR3,
+    LCD_MOTOR4,
+    LCD_LAMP,
+    LCD_HEATER,
+    LCD_DOOR
+
+
+
+
+
+
+}LCD_CUSTOM_CHAR;
+
+typedef enum
+{
+
+    LCD_Clear = 0b00000001,
+    LCD_Home = 0b00000010,
+    LCD_EntryMode = 0b00000110,
+    LCD_DisplayOff = 0b00001000,
+    LCD_DisplayOn = 0b00001100,
+    LCD_FunctionReset = 0b00110000,
+    LCD_FunctionSet4bit = 0b00101000,
+    LCD_SetCursor = 0b10000000
+# 60 "./LCD.h"
+}LCD_Instruction_t;
+
+
+void LCD_Init(void);
+void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
+void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
+void LCD_Update(void);
+# 13 "SW.c" 2
+# 23 "SW.c"
+void SW_UpdateState(SW_t sw);
+# 43 "SW.c"
+typedef struct
+{
+    uint8 samples[2];
+    uint8 state;
+}SW_DATA_t;
+
+
+
+
+
+
+ static SW_DATA_t SW_DATA[(2)];
+
+
+
+
+ IOPinStruct_t SW [(2)];
+# 68 "SW.c"
+void SW_Init(SW_t sw,volatile uint8 * dir,volatile uint8 * port , uint8 pin)
+{
+
+    (RBPU = 1);
+
+
+    SW[sw].dirRegPtr = dir;
+    SW[sw].portRegPtr = port;
+    SW[sw].pin = pin;
+
+
+    GPIO_Init_Pin(SW[sw].dirRegPtr,SW[sw].pin,(1));
+    SW_DATA[sw].state = SW_RELEASED;
+    SW_DATA[sw].samples[0] = (1);
+    SW_DATA[sw].samples[1] = (1);
+
+}
+uint8 SW_GetState(SW_t sw)
+{
+    uint8 ret =0;
+
+
+    ret = SW_DATA[sw].state;
+
+    return ret;
+}
+void SW_Update(void)
+{
+    int i =0;
+
+
+
+    static uint8 SW_Time_Counter = 0;
+    SW_Time_Counter += (5);
+
+    if(SW_Time_Counter != (20))
+    {
+        return;
+    }
+    SW_Time_Counter = 0;
+
+    for(i =0;i<(2);i++)
+    {
+
+        SW_DATA[i].samples[0] = SW_DATA[i].samples[1];
+        SW_DATA[i].samples[1] = ((*SW[i].portRegPtr >> SW[i].pin)& 1);
+
+        SW_UpdateState(i);
+    }
+
+}
+
+void SW_UpdateState(SW_t sw)
+{
+# 138 "SW.c"
+    switch(SW_DATA[sw].state)
+    {
+
+        case SW_PRE_RELEASED:
+            if(SW_DATA[sw].samples[0] == (1) && SW_DATA[sw].samples[1] == (1))
+                SW_DATA[sw].state = SW_RELEASED;
+            break;
+        case SW_RELEASED:
+            if(SW_DATA[sw].samples[0] == (0) && SW_DATA[sw].samples[1] == (0))
+                SW_DATA[sw].state = SW_PRE_PRESSED;
+            break;
+        case SW_PRE_PRESSED:
+            if(SW_DATA[sw].samples[0] == (0) && SW_DATA[sw].samples[1] == (0))
+                SW_DATA[sw].state = SW_PRESSED;
+            break;
+        case SW_PRESSED:
+            if(SW_DATA[sw].samples[0] == (1) && SW_DATA[sw].samples[1] == (1))
+                SW_DATA[sw].state = SW_PRE_RELEASED;
+            break;
+        default:
+
+            break;
+    }
+}

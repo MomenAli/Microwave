@@ -3,20 +3,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 "63 ./LCD.h
 [; ;./LCD.h: 63: void LCD_Init(void);
 [v _LCD_Init `(v ~T0 @X0 0 ef ]
-"85 Microwave.c
-[; ;Microwave.c: 85: void init(void);
-[v _init `(v ~T0 @X0 0 ef ]
-"40 ./OSTimer.h
-[; ;./OSTimer.h: 40: void TMR_Init(void);
-[v _TMR_Init `(v ~T0 @X0 0 ef ]
-"41
-[; ;./OSTimer.h: 41: void TMR_Start(void);
-[v _TMR_Start `(v ~T0 @X0 0 ef ]
-"88 ./Keypad.h
-[; ;./Keypad.h: 88: void keypad_Init(void);
+"87 Microwave.c
+[; ;Microwave.c: 87: void initDO(void);
+[v _initDO `(v ~T0 @X0 0 ef ]
+"88
+[; ;Microwave.c: 88: void initOSTMR(void);
+[v _initOSTMR `(v ~T0 @X0 0 ef ]
+"90 ./Keypad.h
+[; ;./Keypad.h: 90: void keypad_Init(void);
 [v _keypad_Init `(v ~T0 @X0 0 ef ]
-"108 Microwave.c
-[; ;Microwave.c: 108:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
+"89 Microwave.c
+[; ;Microwave.c: 89: void initSW(void);
+[v _initSW `(v ~T0 @X0 0 ef ]
+"111
+[; ;Microwave.c: 111:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(6),DO_OFF);
 [c E3166 0 1 2 .. ]
 [n E3166 . DO_LAMP DO_HEATER DO_MOTOR  ]
 [c E3162 0 1 .. ]
@@ -36,6 +36,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 "3847
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 3847: extern volatile unsigned char TRISC __attribute__((address(0xF94)));
 [v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
+"40 ./OSTimer.h
+[; ;./OSTimer.h: 40: void TMR_Init(void);
+[v _TMR_Init `(v ~T0 @X0 0 ef ]
+"41
+[; ;./OSTimer.h: 41: void TMR_Start(void);
+[v _TMR_Start `(v ~T0 @X0 0 ef ]
+"131 Microwave.c
+[; ;Microwave.c: 131:     SW_Init(SW_DOOR,&(TRISB),&(PORTB),(4));
+[c E3242 0 1 .. ]
+[n E3242 . SW_DOOR SW_WEIGHT_SENSOR  ]
+"61 ./SW.h
+[; ;./SW.h: 61: void SW_Init(SW_t ,volatile uint8 * dir,volatile uint8 * port , uint8 pin);
+[v _SW_Init `(v ~T0 @X0 0 ef4`E3242`*Vuc`*Vuc`uc ]
 "12 Microwave.c
 [p x PLLDIV = 1 ]
 "13
@@ -623,64 +636,94 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f4550.h: 8893: __asm("TOSU equ 0FFFh");
 [; <" TOSU equ 0FFFh ;# ">
 [v $root$_main `(v ~T0 @X0 0 e ]
-"87 Microwave.c
-[; ;Microwave.c: 87: void main(void) {
+"91 Microwave.c
+[; ;Microwave.c: 91: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"90
-[; ;Microwave.c: 90:     LCD_Init();
-[e ( _LCD_Init ..  ]
-"91
-[; ;Microwave.c: 91:     init();
-[e ( _init ..  ]
-"92
-[; ;Microwave.c: 92:     TMR_Init();
-[e ( _TMR_Init ..  ]
-"93
-[; ;Microwave.c: 93:     TMR_Start();
-[e ( _TMR_Start ..  ]
 "94
-[; ;Microwave.c: 94:     keypad_Init();
-[e ( _keypad_Init ..  ]
+[; ;Microwave.c: 94:     LCD_Init();
+[e ( _LCD_Init ..  ]
 "95
-[; ;Microwave.c: 95:     while(1)
-[e :U 369 ]
+[; ;Microwave.c: 95:     initDO();
+[e ( _initDO ..  ]
 "96
-[; ;Microwave.c: 96:     {
-{
+[; ;Microwave.c: 96:     initOSTMR();
+[e ( _initOSTMR ..  ]
+"97
+[; ;Microwave.c: 97:     keypad_Init();
+[e ( _keypad_Init ..  ]
 "98
-[; ;Microwave.c: 98:     }
-}
+[; ;Microwave.c: 98:     initSW();
+[e ( _initSW ..  ]
+"101
+[; ;Microwave.c: 101:     while(1);
+[e :U 369 ]
 [e :U 368 ]
 [e $U 369  ]
 [e :U 370 ]
-"99
-[; ;Microwave.c: 99:     return;
+"102
+[; ;Microwave.c: 102:     return;
 [e $UE 367  ]
-"100
-[; ;Microwave.c: 100: }
+"103
+[; ;Microwave.c: 103: }
 [e :UE 367 ]
 }
-"103
-[; ;Microwave.c: 103: void init(void)
-[v _init `(v ~T0 @X0 1 ef ]
-"104
-[; ;Microwave.c: 104: {
+"106
+[; ;Microwave.c: 106: void initDO(void)
+[v _initDO `(v ~T0 @X0 1 ef ]
+"107
+[; ;Microwave.c: 107: {
 {
-[e :U _init ]
+[e :U _initDO ]
 [f ]
-"108
-[; ;Microwave.c: 108:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(0),DO_OFF);
-[e ( _DO_Init (4 , , , , . `E3166 0 &U _PORTB &U _TRISB -> -> 0 `i `uc . `E3162 0 ]
-"110
-[; ;Microwave.c: 110:     DO_Init(DO_HEATER,&(PORTB),&(TRISB),(1),DO_OFF);
-[e ( _DO_Init (4 , , , , . `E3166 1 &U _PORTB &U _TRISB -> -> 1 `i `uc . `E3162 0 ]
-"112
-[; ;Microwave.c: 112:     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
+"111
+[; ;Microwave.c: 111:     DO_Init(DO_LAMP,&(PORTB),&(TRISB),(6),DO_OFF);
+[e ( _DO_Init (4 , , , , . `E3166 0 &U _PORTB &U _TRISB -> -> 6 `i `uc . `E3162 0 ]
+"113
+[; ;Microwave.c: 113:     DO_Init(DO_HEATER,&(PORTB),&(TRISB),(7),DO_OFF);
+[e ( _DO_Init (4 , , , , . `E3166 1 &U _PORTB &U _TRISB -> -> 7 `i `uc . `E3162 0 ]
+"115
+[; ;Microwave.c: 115:     DO_Init(DO_MOTOR,&(PORTC),&(TRISC),(2),DO_OFF);
 [e ( _DO_Init (4 , , , , . `E3166 2 &U _PORTC &U _TRISC -> -> 2 `i `uc . `E3162 0 ]
-"114
-[; ;Microwave.c: 114: }
+"117
+[; ;Microwave.c: 117: }
 [e :UE 371 ]
+}
+"120
+[; ;Microwave.c: 120: void initOSTMR(void)
+[v _initOSTMR `(v ~T0 @X0 1 ef ]
+"121
+[; ;Microwave.c: 121: {
+{
+[e :U _initOSTMR ]
+[f ]
+"122
+[; ;Microwave.c: 122:     TMR_Init();
+[e ( _TMR_Init ..  ]
+"123
+[; ;Microwave.c: 123:     TMR_Start();
+[e ( _TMR_Start ..  ]
+"124
+[; ;Microwave.c: 124: }
+[e :UE 372 ]
+}
+"127
+[; ;Microwave.c: 127: void initSW(void)
+[v _initSW `(v ~T0 @X0 1 ef ]
+"128
+[; ;Microwave.c: 128: {
+{
+[e :U _initSW ]
+[f ]
+"131
+[; ;Microwave.c: 131:     SW_Init(SW_DOOR,&(TRISB),&(PORTB),(4));
+[e ( _SW_Init (4 , , , . `E3242 0 &U _TRISB &U _PORTB -> -> 4 `i `uc ]
+"133
+[; ;Microwave.c: 133:     SW_Init(SW_WEIGHT_SENSOR,&(TRISB),&(PORTB),(5));
+[e ( _SW_Init (4 , , , . `E3242 1 &U _TRISB &U _PORTB -> -> 5 `i `uc ]
+"135
+[; ;Microwave.c: 135: }
+[e :UE 373 ]
 }

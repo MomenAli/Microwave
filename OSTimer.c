@@ -12,6 +12,7 @@
 #include "LCD.h"
 #include "DO.h"
 #include "Keypad.h"
+#include "SW.h"
 
 
 /********************* private ***********************/
@@ -46,16 +47,18 @@ void __interrupt() TMR0_ISR(void)
     tempCounter+=OS_TICK;
     //tasks 
     keypad_Update();
+    SW_Update();
     LCD_Update();
     
+    
     //test code
-    if(tempCounter >= 4000){
+    if(tempCounter >= 20){
         tempCounter = 0;
         // update lcd as test
-        LCD_SetSymbol(LCD_DOOR,1,counter);
-        counter++;
-        if(counter == 16)
-        {counter=-1;}
+        if(SW_GetState(SW_WEIGHT_SENSOR) == SW_PRE_PRESSED)
+            LCD_SetSymbol(LCD_DOOR,0,0);
+        if(SW_GetState(SW_WEIGHT_SENSOR) == SW_PRE_RELEASED)
+            LCD_SetSymbol(' ',0,0);
     }
     //end of test code
     

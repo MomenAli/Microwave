@@ -13,6 +13,7 @@
 #include "GPIO.h"
 #include "Keypad.h"
 #include "LCD.h"
+#include "SW.h"
 
 #define KEYPAD_UPDATE_TICK (10)
 
@@ -81,7 +82,11 @@ static uint8 tick_counter = 0;
 
 void keypad_Init(void)
 {
-    
+    /* PLEASE EDIT THIS FUNCTION IF YOU WANT TO ADD NEW KEYS
+     * YOU CAN ADD NEW ROW OR NEW COLUMN DEPEND ON YOUR UPGRAD
+     * IF YOU ADD ROW PLEASE EDIT THE NUMBER OF INPUTS PIN IN THE HEADER
+     * IF YOU ADD COLUMN PLEASE EDIT THE NUMBER OF OUTPUTS PIN IN THE HEADER
+     */
     KEYPAD_PULLUP_RESISOR_ENABLE;
     
     // define the Input pins
@@ -105,6 +110,8 @@ void keypad_Init(void)
     keypad.KP_I_Pins[3].dirRegPtr  = &KEYPAD_ROW4_DIR;
     keypad.KP_I_Pins[3].pin        = KEYPAD_ROW4_PIN;
     GPIO_Init_Pin(keypad.KP_I_Pins[3].dirRegPtr,keypad.KP_I_Pins[3].pin,GPIO_IN);
+    
+    
     // define the Output pins
     // column 1
     keypad.KP_O_Pins[0].portRegPtr = &KEYPAD_COLUMN1_PORT;
@@ -122,6 +129,8 @@ void keypad_Init(void)
     keypad.KP_O_Pins[2].pin        = KEYPAD_COLUMN3_PIN;
     GPIO_Init_Pin(keypad.KP_O_Pins[2].dirRegPtr,keypad.KP_O_Pins[2].pin,GPIO_OUT);
     
+    
+    
     // reset
     GPIO_Write_Pin(*keypad.KP_O_Pins[0].portRegPtr,keypad.KP_O_Pins[0].pin,SW_RELEASED_LEVEL);
     GPIO_Write_Pin(*keypad.KP_O_Pins[1].portRegPtr,keypad.KP_O_Pins[1].pin,SW_RELEASED_LEVEL);
@@ -133,8 +142,13 @@ void keypad_Init(void)
 }
 uint8 keypad_getState(KP_t item)
 {
-    return KP_Btn_Data[item].state;
+    uint8 ret = SW_RELEASED;
+    ret = KP_Btn_Data[item].state;
+    return ret;
 }
+
+
+
 void keypad_Update(void)
 {
     int i;
@@ -160,6 +174,7 @@ void keypad_Update(void)
 
     
     // update the state
+    // This switch represent the state machine of the switch
     
     for(i =0; i<KEYPAD_INPUT_PINS_NUMBER;i++)
     {
@@ -185,7 +200,6 @@ void keypad_Update(void)
             default:
                 break;
         }
-        if(KP_Btn_Data[current_column + 3*i].state == SW_PRE_PRESSED)LCD_SetSymbol('0'+current_column + 3*i+1 , 0 , current_column + 3*i);
     }
     //switch to the next column
     
@@ -195,9 +209,6 @@ void keypad_Update(void)
     // increment current_column
     current_column++;
     if(current_column == KEYPAD_OUTPUT_PINS_NUMBER)current_column = 0;
-    
-    
-    
 }
 
 

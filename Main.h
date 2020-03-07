@@ -155,8 +155,17 @@ typedef unsigned int  uint16;
 
 
 // keypad pull up resistor enable
+/* RDPU: PORTD Pull-up Enable bit
+ * 1 = PORTD pull-ups are enabled by individual port latch values
+ * 0 = All PORTD pull-ups are disabled*/
 
-#define KEYPAD_PULLUP_RESISOR_ENABLE (RDPU = 0)
+#define KEYPAD_PULLUP_RESISOR_ENABLE (RDPU = 1)
+
+// switches pull up resistor enable
+/* RBPU: PORTB Pull-up Enable bit
+ * 1 = All PORTB pull-ups are disabled
+ * 0 = PORTB pull-ups are enabled by individual port latch values */
+#define SWITCH_PULLUP_RESISOR_ENABLE (RBPU = 1)
 
 
 #endif	/* MAIN_H */

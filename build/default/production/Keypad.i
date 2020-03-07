@@ -5656,6 +5656,8 @@ typedef enum
 
 
 
+
+
 typedef enum
 {
     SW_RELEASED,
@@ -5730,7 +5732,27 @@ void LCD_SetSymbol(uint8 sym,uint8 row,uint8 column);
 void LCD_SetString(uint8 sym[],uint8 row,uint8 column,uint8 number);
 void LCD_Update(void);
 # 15 "Keypad.c" 2
-# 40 "Keypad.c"
+
+# 1 "./SW.h" 1
+# 36 "./SW.h"
+typedef enum
+{
+    SW_DOOR,
+    SW_WEIGHT_SENSOR
+}SW_t;
+# 61 "./SW.h"
+void SW_Init(SW_t ,volatile uint8 * dir,volatile uint8 * port , uint8 pin);
+
+
+
+uint8 SW_GetState(SW_t sw);
+
+
+
+
+void SW_Update(void);
+# 16 "Keypad.c" 2
+# 41 "Keypad.c"
 typedef struct
 {
     uint8 samples[2];
@@ -5748,7 +5770,7 @@ typedef struct
     IOPinStruct_t KP_O_Pins[(3)];
     IOPinStruct_t KP_I_Pins[(4)];
 }Keypad_Struct_t;
-# 66 "Keypad.c"
+# 67 "Keypad.c"
 static KEYPAD_BTN_DATA_t KP_Btn_Data [(12)];
 
 
@@ -5768,7 +5790,11 @@ static uint8 tick_counter = 0;
 void keypad_Init(void)
 {
 
-    (RDPU = 0);
+
+
+
+
+    (RDPU = 1);
 
 
 
@@ -5793,6 +5819,8 @@ void keypad_Init(void)
     GPIO_Init_Pin(keypad.KP_I_Pins[3].dirRegPtr,keypad.KP_I_Pins[3].pin,(1));
 
 
+
+
     keypad.KP_O_Pins[0].portRegPtr = &((PORTB));
     keypad.KP_O_Pins[0].dirRegPtr = &((TRISB));
     keypad.KP_O_Pins[0].pin = ((0));
@@ -5809,6 +5837,8 @@ void keypad_Init(void)
     GPIO_Init_Pin(keypad.KP_O_Pins[2].dirRegPtr,keypad.KP_O_Pins[2].pin,(0));
 
 
+
+
     ((*keypad.KP_O_Pins[0].portRegPtr)=(*keypad.KP_O_Pins[0].portRegPtr & ~(1<<keypad.KP_O_Pins[0].pin))|((1)<<keypad.KP_O_Pins[0].pin));
     ((*keypad.KP_O_Pins[1].portRegPtr)=(*keypad.KP_O_Pins[1].portRegPtr & ~(1<<keypad.KP_O_Pins[1].pin))|((1)<<keypad.KP_O_Pins[1].pin));
     ((*keypad.KP_O_Pins[2].portRegPtr)=(*keypad.KP_O_Pins[2].portRegPtr & ~(1<<keypad.KP_O_Pins[2].pin))|((1)<<keypad.KP_O_Pins[2].pin));
@@ -5819,8 +5849,13 @@ void keypad_Init(void)
 }
 uint8 keypad_getState(KP_t item)
 {
-    return KP_Btn_Data[item].state;
+    uint8 ret = SW_RELEASED;
+    ret = KP_Btn_Data[item].state;
+    return ret;
 }
+
+
+
 void keypad_Update(void)
 {
     int i;
@@ -5843,6 +5878,7 @@ void keypad_Update(void)
 
         KP_Btn_Data[current_column+ 3*i].samples[1] = ((*keypad.KP_I_Pins[i].portRegPtr >> keypad.KP_I_Pins[i].pin)& 1);
     }
+
 
 
 
@@ -5871,7 +5907,6 @@ void keypad_Update(void)
             default:
                 break;
         }
-        if(KP_Btn_Data[current_column + 3*i].state == SW_PRE_PRESSED)LCD_SetSymbol('0'+current_column + 3*i+1 , 0 , current_column + 3*i);
     }
 
 
@@ -5881,7 +5916,4 @@ void keypad_Update(void)
 
     current_column++;
     if(current_column == (3))current_column = 0;
-
-
-
 }

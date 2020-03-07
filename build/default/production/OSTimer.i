@@ -5736,6 +5736,8 @@ typedef enum
 
 
 
+
+
 typedef enum
 {
     SW_RELEASED,
@@ -5750,6 +5752,26 @@ void keypad_Init(void);
 uint8 keypad_getState(KP_t item);
 void keypad_Update(void);
 # 14 "OSTimer.c" 2
+
+# 1 "./SW.h" 1
+# 36 "./SW.h"
+typedef enum
+{
+    SW_DOOR,
+    SW_WEIGHT_SENSOR
+}SW_t;
+# 61 "./SW.h"
+void SW_Init(SW_t ,volatile uint8 * dir,volatile uint8 * port , uint8 pin);
+
+
+
+uint8 SW_GetState(SW_t sw);
+
+
+
+
+void SW_Update(void);
+# 15 "OSTimer.c" 2
 
 
 
@@ -5785,16 +5807,18 @@ void __attribute__((picinterrupt(("")))) TMR0_ISR(void)
     tempCounter+=(5);
 
     keypad_Update();
+    SW_Update();
     LCD_Update();
 
 
-    if(tempCounter >= 4000){
+
+    if(tempCounter >= 20){
         tempCounter = 0;
 
-        LCD_SetSymbol(LCD_DOOR,1,counter);
-        counter++;
-        if(counter == 16)
-        {counter=-1;}
+        if(SW_GetState(SW_WEIGHT_SENSOR) == SW_PRE_PRESSED)
+            LCD_SetSymbol(LCD_DOOR,0,0);
+        if(SW_GetState(SW_WEIGHT_SENSOR) == SW_PRE_RELEASED)
+            LCD_SetSymbol(' ',0,0);
     }
 
 

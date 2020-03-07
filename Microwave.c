@@ -80,27 +80,30 @@
 #include "LCD.h"
 #include "OSTimer.h"
 #include "Keypad.h"
+#include "SW.h"
+#include "GPIO.h"
 
-
-void init(void);
+/*----------------------  functions prototypes  ---------------*/
+void initDO(void);
+void initOSTMR(void);
+void initSW(void);
 
 void main(void) {
     
     /* test LCD module */
     LCD_Init();
-    init();
-    TMR_Init();
-    TMR_Start();
+    initDO();
+    initOSTMR();
     keypad_Init();
-    while(1)
-    {
-        
-    }
+    initSW();
+    //SWITCH_PULLUP_RESISOR_ENABLE;
+    //GPIO_Set_Dir_Pin(GPIO_PORTB_DIR,PIN_4,1);
+    while(1);
     return;
 }
 
 
-void init(void)
+void initDO(void)
 {
    
     //DO initialization 
@@ -110,5 +113,23 @@ void init(void)
     DO_Init(DO_HEATER,&HEATER_PORT,&HEATER_DIR,HEATER_PIN,DO_OFF);
     //motor initialization
     DO_Init(DO_MOTOR,&MOTOR_PORT,&MOTOR_DIR,MOTOR_PIN,DO_OFF);
+   
+}
+
+
+void initOSTMR(void)
+{
+    TMR_Init();
+    TMR_Start();
+}
+
+
+void initSW(void)
+{
+    //Switches initialization 
+    // Door limit initialization
+    SW_Init(SW_DOOR,&SW_DOOR_DIR,&SW_DOOR_PORT,SW_DOOR_PIN);
+    //Weight sensor initialization
+    SW_Init(SW_WEIGHT_SENSOR,&SW_WEIGHT_SENSOR_DIR,&SW_WEIGHT_SENSOR_PORT,SW_WEIGHT_SENSOR_PIN);
    
 }

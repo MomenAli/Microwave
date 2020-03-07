@@ -75,6 +75,8 @@ typedef enum
 /*
  * Switch states
  */
+#ifndef SW_State_define
+#define SW_State_define
 typedef enum
 {
     SW_RELEASED,
@@ -82,7 +84,7 @@ typedef enum
     SW_PRESSED,
     SW_PRE_RELEASED
 }SW_State_t;
-
+#endif
 
 /*----------------------- public function prototypes -----------------------------*/
 void keypad_Init(void);
